@@ -14,5 +14,10 @@ def get_home():
     return render_template("home.html")
 
 
+@app.route("/chatroom")
+def get_room():
+    return render_template("chatroom.html")
+
+
 if __name__ == "__main__":
     app.run(debug=False)
