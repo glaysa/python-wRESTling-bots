@@ -1,7 +1,6 @@
-from flask import Flask, request, render_template, url_for
+from app import app
+from flask import render_template
 
-
-app = Flask(__name__)
 
 @app.route("/")
 @app.route("/login")
@@ -17,7 +16,3 @@ def get_home():
 @app.route("/chatroom")
 def get_room():
     return render_template("chatroom.html")
-
-
-if __name__ == "__main__":
-    app.run(debug=False)
