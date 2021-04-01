@@ -13,10 +13,10 @@
                 <div class="mt-3" style="background: coral; width: 100px; height: 40px;"></div>
                 <div class="mt-3" style="background: coral; width: 100px; height: 40px;"></div>
             </div>
-            <form class="col-md-5">
-                <label for="name" class="fw-bolder form-label">What do you want to call the chat room?</label>
-                <input type="text" id="name" name="name" class="form-control">
-                <button type="submit" class="btn btn-primary mt-3">Create room</button>
+            <form action="" method="POST" class="col-md-5">
+                {{ form.name.label(class="fw-bolder form-label") }}
+                {{ form.name(class="form-control") }}
+                {{ form.submit(class="btn btn-primary mt-3") }}
             </form>
         </div>
     </div>
