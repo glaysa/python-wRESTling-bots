@@ -9,5 +9,5 @@ class User:
     def __str__(self):
         return f"{{\n" \
                f"\t\"id\" : \"{self.id}\",\n" \
-               f"\t\"username\" : \"{self.username}\"\n"\
-                f"}}"
+               f"\t\"username\" : \"{self.username}\"\n" \
+               f"}}"
