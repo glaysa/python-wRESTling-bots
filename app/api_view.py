@@ -48,7 +48,7 @@ class UserList(Resource):
     def get(self):
         return users
 
-    def post(self):
+    def post(self, user: User):
         pass
 
 
