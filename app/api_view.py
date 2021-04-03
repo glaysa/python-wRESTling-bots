@@ -1,9 +1,6 @@
-from flask import Flask
-from flask_restful import Api, Resource, abort
+from app import api
+from flask_restful import Resource, abort
 import dummy_data
-
-app = Flask(__name__)
-api = Api(app)
 
 users = dummy_data.users
 rooms = dummy_data.rooms
@@ -111,6 +108,3 @@ api.add_resource(RoomUserList, "/api/room/<int:room_id>/users")
 api.add_resource(RoomMessageList, "/api/room/<int:room_id>/messages")
 api.add_resource(RoomUserMessageList, "/api/room/<int:room_id>/<int:user_id>/messages")
 
-
-if __name__ == "__main__":
-    app.run(debug=True)
