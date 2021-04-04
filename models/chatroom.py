@@ -29,19 +29,13 @@ class Chatroom:
         dictionary = json.loads(json_str)
         return cls(**dictionary)
 
-    def __str__(self):
-        return f"id: {self.id},\n" \
-               f"name: {self.name},\n" \
-               f"users: {self.users},\n" \
-               f"messages: {self.messages}"
-
-    # not working
-    def to_dictionary(self):
-        usrs_dictionary = [usr.to_dictionary() for usr in self.users]
-        msgs_dictionary = [msg.to_dictionary() for msg in self.messages]
+    @staticmethod
+    def to_dictionary(obj):
+        usrs_dictionary = [User.to_dictionary(usr) for usr in obj.users]
+        msgs_dictionary = [Message.to_dictionary(msg) for msg in obj.messages]
         return {
-            'id': self.id,
-            'name': self.name,
+            'id': obj.id,
+            'name': obj.name,
             'users': usrs_dictionary,
             'messages': msgs_dictionary
         }
