@@ -1,8 +1,11 @@
-from flask_restful import Resource, abort, reqparse
-import dummy_data
+from app import api
+from flask_restful import Resource, abort
+from dummy_data import users, rooms, messages
 
-users = dummy_data.users
-rooms = dummy_data.rooms
+
+
+users = users
+rooms = rooms
 
 
 def abort_if_obj_doesnt_exist(obj_id: int, obj_list: iter, abort_message: str):
