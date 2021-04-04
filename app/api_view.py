@@ -1,8 +1,6 @@
 from app import api
-from flask_restful import Resource, abort
+from flask_restful import Resource, abort, reqparse
 from dummy_data import users, rooms, messages
-
-
 
 users = users
 rooms = rooms
@@ -173,3 +171,13 @@ class RoomUserMessageList(Resource):
         new_message = {"sender": users[user_id], "content": user_message}
         room_messages.append(new_message)
         return {"message": f"A new message has been added to {rooms[room_id]['name']}"}
+
+
+# API endpoints
+api.add_resource(User, "/api/user/<int:user_id>")
+api.add_resource(Room, "/api/room/<int:room_id>")
+api.add_resource(UserList, "/api/users")
+api.add_resource(RoomList, "/api/rooms")
+api.add_resource(RoomUserList, "/api/room/<int:room_id>/users")
+api.add_resource(RoomMessageList, "/api/room/<int:room_id>/messages")
+api.add_resource(RoomUserMessageList, "/api/room/<int:room_id>/<int:user_id>/messages")
