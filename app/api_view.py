@@ -145,11 +145,9 @@ class RoomUserMessageList(Resource):
         # Room data
         room_messages = rooms[room_id]["messages"]
 
-        # Shows all messages from this particular user
-        for message in room_messages:
-            if message["sender"] == users[user_id]:
-                return message
-        return {"message": "This user has not sent a message to this room yet."}
+        # Get the all the messages of one user in a room
+        user_messages = filter(lambda message: message["sender"] == room_users[user_id], room_messages)
+        return list(user_messages)
 
     def post(self, room_id: int, user_id: int):
 
