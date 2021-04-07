@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template
+from flask import render_template, request
 from validation.form_validations import EnterAppForm, CreateRoomForm
 
 app.config['SECRET_KEY'] = '354b9b92b934613f14afe99c94a82415a9a3d49a'  # Not Necessary
@@ -18,9 +18,14 @@ def get_register():
 
 @app.route("/home")
 def get_home():
-    # msg = request.args.get('msg')
-    return render_template("home.html")
+    msg = request.args.get('msg')
+    return render_template("home.html", msg=msg, rooms=[])
 
+
+@app.route("/profile")
+def get_profile_page():
+    # user object can be sent in
+    return render_template("profile.html")
 
 @app.route("/chatroom")
 def get_room():

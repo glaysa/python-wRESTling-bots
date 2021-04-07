@@ -28,17 +28,19 @@
                                class="fw-bolder col-10 form-control mt-3 mb-3 btn btn-primary"/>
                     </div>
                 </form>
+                {% if msg %}
+                    <div class="col-md-8 mx-auto mt-3 align-items-center alert alert-warning alert-dismissible fade show"
+                         role="alert">
+                        {{ msg }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endif %}
                 <div class="col-md-8 mx-auto mt-3 align-items-center">
                     <h5>Else
-                        <a href="login" class="p-2 pt-1 m-2 w-25 fw-bolder btn btn-primary" style="text-decoration: none; color: whitesmoke;">login</a>if
+                        <a href="login" class="px-auto pt-1 m-2 w-25 fw-bolder btn btn-outline-secondary btn-s" style="text-decoration: none;">login</a>if
                         you already have a user
                     </h5>
                 </div>
-                {% if msg %}
-                    <div class="col-md-8 mx-auto mt-3 align-items-center alert alert-warning" role="alert">
-                        {{ msg }}
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>
