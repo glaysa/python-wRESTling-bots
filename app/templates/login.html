@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Login page{% endblock %}
+
+{% block page %}
+    <div class="container-md h-75 w-50 mt-5">
+        <div class="row align-items-center h-100">
+            <div class="row">
+                <form action="/api/user/user_id" method="GET" class="form-group col-md-10 mx-auto border rounded"
+                      style="background: #dbcaca">
+                    <div class="col-md-10 mt-3 mb-1 mx-auto">
+                        <label for="username" class="form-label fw-bolder">Username</label>
+                        <input name="username" type="text" class="form-control">
+                    </div>
+                    <div class="col-md-10 mx-auto">
+                        <input type="submit" value="Login"
+                               class="fw-bolder col-10 form-control mt-3 mb-3 btn btn-primary"/>
+                    </div>
+                </form>
+                {% if msg %}
+                    <div class="col-md-10 mx-auto mt-3 align-items-center alert alert-warning" role="alert">
+                        {{ msg }}
+                    </div>
+                {% endif %}
+                <div class="col-md-10 mx-auto mt-3 align-items-center">
+                    <h5>Dont have a user then create one here:
+                        <a href="register" class="p-2 pt-1 m-2  fw-bolder btn btn-primary"
+                           style="text-decoration: none; color: whitesmoke;">Register</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+{% endblock %}
