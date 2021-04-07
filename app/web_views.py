@@ -7,15 +7,13 @@ app.config['SECRET_KEY'] = '354b9b92b934613f14afe99c94a82415a9a3d49a'  # Not Nec
 
 @app.route("/register")
 def get_login():
-    form = EnterAppForm()
-    return render_template("register.html", form=form)
+    return render_template("register.html")
 
 
 @app.route("/")
 @app.route("/home")
 def get_home():
-    form = CreateRoomForm()
-    return render_template("home.html", form=form)
+    return render_template("home.html",)
 
 
 '''

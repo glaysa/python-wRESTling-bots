@@ -1,3 +1,6 @@
+import json
+
+from flask import render_template, request, redirect, url_for
 from app import api
 from flask_restful import Resource, abort, reqparse
 from dummy_data import users, rooms, messages
@@ -49,23 +52,22 @@ class UserList(Resource):
     def get(self):
         return users
 
-    def post(self, user):
-        #### msg = validate(user)
-        #### flush ??
-        users.append(user)
-        # Data needed to create a user
-        # (den skal slettes etter hvert fordi data skal kommer fra en form i nettsiden)
-        '''
-        user_args = reqparse.RequestParser()
-        user_args.add_argument("name", type=str, required=True, help="Provide a name for the user")
-        user_args.add_argument("personality", type=str, required=True, help="Provide the personality of the user")
-        user_data = user_args.parse_args()
-        '''
-        # Add the new user to dict
-        # user_id = len(users) + 1
-        # new_user = {user_id: user_data}
-        # users.update(new_user)
-        #return {"new user": new_user}
+
+    def post(self):
+        status_msg = None
+        if request.method == 'POST':
+            user = {
+                'username': request.form['username'],
+                'personality': request.form['personality']
+            }
+            print(type(user))
+            users.append(user)
+            status_msg = f"User {user['username']} created"
+            return redirect(url_for('get_home', msg=status_msg))
+
+        status_msg = "Registration faild, please try again!"
+        return render_template('register.html', msg=status_msg)
+
 
 
 

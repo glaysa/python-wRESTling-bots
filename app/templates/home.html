@@ -27,6 +27,7 @@
                 <input type="submit" id="createRoom" class="btn btn-primary mt-3" value="Create Room">
             </form>
         </div>
+        <h1>{{ msg }}</h1>
     </div>
 {% endblock %}
 
@@ -41,7 +42,8 @@
             }
             $.post('/api/rooms',room, ()=> console.log(room));
             name.val("");
-        })
+    });
+
 
 
     // opening the clicked room: (Calls a getRoom from server and finding it using room_id)
