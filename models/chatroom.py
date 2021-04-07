@@ -8,9 +8,9 @@ class Chatroom:
 
     def __init__(self, name, users=None, messages=None):
         if messages is None:
-            messages = []
+            messages: list[int] = list
         if users is None:
-            users = []
+            users: list[int] = list
 
         self.id = self._ROOM_ID
         self.__class__._ROOM_ID += 1
@@ -18,10 +18,10 @@ class Chatroom:
         self.users = users
         self.messages = messages
 
-    def set_user(self, user: User):
+    def set_user(self, user: int):
         self.users.append(user)
 
-    def set_message(self, message: Message):
+    def set_message(self, message: int):
         self.messages.append(message)
 
     @classmethod
