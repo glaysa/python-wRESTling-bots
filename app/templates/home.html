@@ -2,10 +2,10 @@
 {% block title %}Home Page{% endblock %}
 {% block page %}
     <div class="btn btn-primary w-25">
-        <a href="registr" style="text-decoration: none; color: whitesmoke;">Register</a>
+        <a href="register" style="text-decoration: none; color: whitesmoke;">Register</a>
     </div>
     <div class="btn btn-primary w-25">
-        <a href="login" style="text-decoration: none; color: whitesmoke;">Register</a>
+        <a href="login" style="text-decoration: none; color: whitesmoke;">Logout</a>
     </div>
     <div class="container-md mt-5">
         <div class="row">
@@ -33,20 +33,6 @@
 
 {% block script%}
 <script>
-    //posting the room to the server:
-    $("form").on('submit',function (event){
-            event.preventDefault();
-            let name = $("#name");
-            const room = {
-                username : name.val()
-            }
-            $.post('/api/rooms',room, ()=> console.log(room));
-            name.val("");
-    });
-
-
-
-    // opening the clicked room: (Calls a getRoom from server and finding it using room_id)
 
 </script>
 {% endblock %}

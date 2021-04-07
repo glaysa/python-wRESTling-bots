@@ -3,64 +3,47 @@
 {% block title %}Register page{% endblock %}
 
 {% block page %}
-    <div class="container-md h-75 w-50">
+    <div class="container-md h-75 w-50 mt-5">
         <div class="row align-items-center h-100">
-            <form action="/api/users" method="POST" class="form-group col-8 mx-auto border rounded" style="background: #dbcaca">
-                <div class="col-10 mt-3 mb-1 mx-auto">
-                    <label for="username" class="form-label fw-bolder">Username</label>
-                    <input name="username" type="text" id="username" class="form-control">
+            <div class="row">
+                <form action="/api/users" method="POST" class="form-group col-md-8 mx-auto border rounded"
+                      style="background: #dbcaca">
+                    <div class="col-md-10 mt-3 mb-1 mx-auto">
+                        <label for="username" class="form-label fw-bolder">Username</label>
+                        <input name="username" type="text" id="username" class="form-control">
+                    </div>
+                    <div class="col-md-10 mt-3 mb-1 mx-auto">
+                        <label for="personalty" class="form-label fw-bolder"> Choose a personality for your bot:</label>
+                        <select name="personality" id="personalty" class="form-control" size=1>
+                            <option value="">Personalities</option>
+                            <option value="sweet">Sweet</option>
+                            <option value="energetic">Energetic</option>
+                            <option value="shy">Shy</option>
+                            <option value="annoying">Annoying</option>
+                            <option value="grumpy">Grumpy</option>
+                        </select>
+                    </div>
+                    <div class="col-md-10 mx-auto">
+                        <input id="register" type="submit" value="Register"
+                               class="fw-bolder col-10 form-control mt-3 mb-3 btn btn-primary"/>
+                    </div>
+                </form>
+                <div class="col-md-8 mx-auto mt-3 align-items-center">
+                    <h5>Else
+                        <a href="login" class="p-2 pt-1 m-2 w-25 fw-bolder btn btn-primary" style="text-decoration: none; color: whitesmoke;">login</a>if
+                        you already have a user
+                    </h5>
                 </div>
-                <div class="col-10 mt-3 mb-1 mx-auto">
-                    <label for="personalty" class="form-label fw-bolder"> Choose a personality for your bot:</label>
-                    <select name="personality" id="personalty" class="form-control" size=1>
-                        <option value="">Personalities</option>
-                        <option value="sweet">Sweet</option>
-                        <option value="energetic">Energetic</option>
-                        <option value="shy">Shy</option>
-                        <option value="annoying">Annoying</option>
-                        <option value="grumpy">Grumpy</option>
-                    </select>
-                </div>
-                <div class="col-10 mx-auto">
-                    <input id="register" type="submit" value="Register" class="col-10 form-control mt-3 mb-3 btn btn-primary"/>
-                </div>
-            </form>
-            <div class="btn btn-primary w-25">
-                <a href="login" style="text-decoration: none; color: whitesmoke;">Back To Login</a>
+                {% if msg %}
+                    <div class="col-md-8 mx-auto mt-3 align-items-center alert alert-warning" role="alert">
+                        {{ msg }}
+                    </div>
+                {% endif %}
             </div>
         </div>
-        <h1>{{ msg }}</h1>
+    </div>
     </div>
 {% endblock %}
 
 {% block script %}
-    <script>
-        /*
-        $("#register").click(function (event){
-            event.preventDefault();
-            let username = $("#username");
-            let personalty = $("#personalty");
-            const user = {
-                username : username.val(),
-                personality:personalty.val()
-            }
-            $.post('/api/users',user, ()=> console.log(user));
-            username.val("");
-            username.val("");
-        })
-
-        $("form").on('submit',function (event){
-            event.preventDefault();
-            let username = $("#username");
-            let personalty = $("#personalty");
-            const user = {
-                username : username.val(),
-                personality:personalty.val()
-            }
-            $.post('/api/users',user, ()=> console.log(user));
-            username.val("");
-            username.val("");
-        });
-        */
-    </script>
 {% endblock %}
