@@ -1,12 +1,10 @@
-import json
-
 from flask import render_template, request, redirect, url_for
 from app import api
 from flask_restful import Resource, abort, reqparse
 from dummy_data import users, rooms, messages
-from models.user import  User
+from models.user import User
 
-users: list[User] = []
+users_list: list[User] = []
 rooms = rooms
 
 
@@ -21,7 +19,7 @@ def abort_if_obj_exist(obj_id: int, obj_list: iter, abort_message: str):
 
 
 # Shows a single user
-class User(Resource):
+class SingleUser(Resource):
 
     def get(self, user_id: int = None):
         abort_if_obj_doesnt_exist(user_id, users, "User not found")
@@ -34,7 +32,7 @@ class User(Resource):
 
 
 # Shows a single room
-class Room(Resource):
+class SingleRoom(Resource):
 
     def get(self, room_id: int = None):
         abort_if_obj_doesnt_exist(room_id, rooms, "Room not found")
@@ -50,25 +48,28 @@ class Room(Resource):
 class UserList(Resource):
 
     def get(self):
-        return users
-
+        return users_list
 
     def post(self):
         status_msg = None
         if request.method == 'POST':
-            user = {
+            '''user = {
                 'username': request.form['username'],
                 'personality': request.form['personality']
             }
             print(type(user))
             users.append(user)
-            status_msg = f"User {user['username']} created"
+            status_msg = f"User {user['username']} created"'''
+
+            username = request.form['username']
+            personality = request.form['personality']
+            new_user = User.json_to_user(username, personality)
+            users_list.append(new_user)
+            status_msg = username
             return redirect(url_for('get_home', msg=status_msg))
 
-        status_msg = "Registration faild, please try again!"
+        status_msg = "Registration failed, please try again!"
         return render_template('register.html', msg=status_msg)
-
-
 
 
 # Shows a list of rooms
@@ -180,8 +181,8 @@ class RoomUserMessageList(Resource):
 
 
 # API endpoints
-api.add_resource(User, "/api/user/<int:user_id>")
-api.add_resource(Room, "/api/room/<int:room_id>")
+api.add_resource(SingleUser, "/api/user/<int:user_id>")
+api.add_resource(SingleRoom, "/api/room/<int:room_id>")
 api.add_resource(UserList, "/api/users")
 api.add_resource(RoomList, "/api/rooms")
 api.add_resource(RoomUserList, "/api/room/<int:room_id>/users")
