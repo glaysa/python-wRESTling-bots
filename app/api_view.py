@@ -1,8 +1,9 @@
 from app import api
 from flask_restful import Resource, abort, reqparse
 from dummy_data import users, rooms, messages
+from models.user import  User
 
-users = users
+users: list[User] = []
 rooms = rooms
 
 
@@ -48,21 +49,23 @@ class UserList(Resource):
     def get(self):
         return users
 
-    def post(self):
-
+    def post(self, user):
+        #### msg = validate(user)
+        #### flush ??
+        users.append(user)
         # Data needed to create a user
         # (den skal slettes etter hvert fordi data skal kommer fra en form i nettsiden)
-
+        '''
         user_args = reqparse.RequestParser()
         user_args.add_argument("name", type=str, required=True, help="Provide a name for the user")
         user_args.add_argument("personality", type=str, required=True, help="Provide the personality of the user")
         user_data = user_args.parse_args()
-
+        '''
         # Add the new user to dict
-        user_id = len(users) + 1
-        new_user = {user_id: user_data}
-        users.update(new_user)
-        return {"new user": new_user}
+        # user_id = len(users) + 1
+        # new_user = {user_id: user_data}
+        # users.update(new_user)
+        #return {"new user": new_user}
 
 
 # Shows a list of rooms
