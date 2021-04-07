@@ -1,13 +1,20 @@
 {% extends "base.html" %}
 {% block title %}Home Page{% endblock %}
 {% block page %}
-    <a href="register.html"></a>
+    <div class="btn btn-primary w-25">
+        <a href="registr" style="text-decoration: none; color: whitesmoke;">Register</a>
+    </div>
+    <div class="btn btn-primary w-25">
+        <a href="login" style="text-decoration: none; color: whitesmoke;">Register</a>
+    </div>
     <div class="container-md mt-5">
         <div class="row">
             <div class="col-md-4">
                 <h2 class="fw-bold">Enter a chatroom:</h2>
                 <!--{% for room in chatrooms %}
-            <button class="btn primary-btn">{{ room.name }}</button>
+                <div class="btn btn-primary w-25" id="openRoomBtn">
+                    <a href="home" style="text-decoration: none; color: whitesmoke;">{{ room.name }}</a>
+                </div>
             {% endfor %}-->
                 <!--temporary divs the code above will be used once it is ready.-->
                 <div class="mt-3" style="background: coral; width: 100px; height: 40px;"></div>
@@ -15,7 +22,7 @@
                 <div class="mt-3" style="background: coral; width: 100px; height: 40px;"></div>
             </div>
             <form action="" method="POST" class="col-md-5">
-                <label class="fw-bolder form-label">Name:</label>
+                <label for="name" class="fw-bolder form-label">Name:</label>
                 <input type="text" id="name" class="form-control">
                 <input type="submit" id="createRoom" class="btn btn-primary mt-3" value="Create Room">
             </form>
@@ -23,11 +30,21 @@
     </div>
 {% endblock %}
 
+{% block script%}
+<script>
+    //posting the room to the server:
+    $("form").on('submit',function (event){
+            event.preventDefault();
+            let name = $("#name");
+            const room = {
+                username : name.val()
+            }
+            $.post('/api/rooms',room, ()=> console.log(room));
+            name.val("");
+        })
 
-<!--
-<form action="" method="POST" class="col-md-5">
-    {{ form.name.label(class="fw-bolder form-label") }}
-    {{ form.name(class="form-control") }}
-    {{ form.submit(class="btn btn-primary mt-3") }}
-</form>
--->
+
+    // opening the clicked room: (Calls a getRoom from server and finding it using room_id)
+
+</script>
+{% endblock %}

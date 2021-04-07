@@ -5,7 +5,7 @@ class User:
     _USER_ID = 1
 
     def __init__(self, username, personality):
-        self.id = self.__class__._USER_ID
+        self.usr_id = self.__class__._USER_ID
         self.__class__._USER_ID += 1
         self.username = username
         self.personality = personality
@@ -18,7 +18,7 @@ class User:
     @staticmethod
     def to_dictionary(obj):
         return {
-            'id': obj.id,
+            'usr_id': obj.usr_id,
             'username': obj.username,
             'personality': obj.personality
         }

@@ -5,38 +5,46 @@
 {% block page %}
     <div class="container-md h-75 w-50">
         <div class="row align-items-center h-100">
-            <form class="form-group col-8 mx-auto border rounded" style="background: #dbcaca">
+            <form action="" method="POST" class="form-group col-8 mx-auto border rounded" style="background: #dbcaca">
                 <div class="col-10 mt-3 mb-1 mx-auto">
-                    <label class="form-label fw-bolder">Username</label>
-                    <input id="username" class="form-control">
+                    <label for="username" class="form-label fw-bolder">Username</label>
+                    <input type="text" id="username" class="form-control">
+                </div>
+                <div class="col-10 mt-3 mb-1 mx-auto">
+                    <label for="personalty" class="form-label fw-bolder"> Choose a personality for your bot:</label>
+                    <select id="personalty" class="form-control" size=1>
+                        <option value="">Personalities</option>
+                        <option value="sweet">Sweet</option>
+                        <option value="energetic">Energetic</option>
+                        <option value="shy">Shy</option>
+                        <option value="annoying">Annoying</option>
+                        <option value="grumpy">Grumpy</option>
+                    </select>
                 </div>
                 <div class="col-10 mx-auto">
-                    <button class="col-10 form-control mt-3 mb-3 btn btn-primary" id="registerBtn">Register</button>
+                    <input type="submit" value="Register" class="col-10 form-control mt-3 mb-3 btn btn-primary"/>
                 </div>
             </form>
+            <div class="btn btn-primary w-25">
+                <a href="login" style="text-decoration: none; color: whitesmoke;">Back To Login</a>
+            </div>
         </div>
     </div>
 {% endblock %}
 
 {% block script %}
     <script>
-        $("#registerBtn").click(function (){
+        $("form").on('submit',function (event){
+            event.preventDefault();
+            let username = $("#username");
+            let personalty = $("#personalty");
             const user = {
-                username : $("#username").val(),
+                username : username.val(),
+                personality:personalty.val()
             }
             $.post('/api/users',user, ()=> console.log(user));
-        })
+            username.val("");
+            username.val("");
+        });
     </script>
 {% endblock %}
-
-
-<!--<form action="" method="POST" class="form-group col-8 mx-auto border rounded" style="background: #dbcaca">
-    {{ form.hidden_tag() }}
-    <div class="col-10 mt-3 mb-1 mx-auto">
-        {{ form.username.label(class="form-label fw-bolder") }}
-        {{ form.username(class="form-control") }}
-    </div>
-    <div class="col-10 mx-auto">
-        {{ form.submit(class="col-10 form-control mt-3 mb-3 btn btn-primary") }}
-    </div>
-</form> -->
