@@ -5,7 +5,7 @@ class Message:
     _MSG_ID = 1
 
     def __init__(self, sender, content, timestamp=None, msg_type=None):
-        self.id = self._MSG_ID
+        self.msg_id = self._MSG_ID
         self.__class__._MSG_ID += 1
         self.sender = sender
         self.content = content
@@ -20,7 +20,7 @@ class Message:
     @staticmethod
     def to_dictionary(obj):
         return {
-            'id': obj.id,
+            'msg_id': obj.room_id,
             'sender': obj.sender,
             'content': Content.to_dictionary(obj.content),
             'timestamp': obj.timestamp,

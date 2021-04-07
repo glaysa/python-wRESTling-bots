@@ -12,7 +12,7 @@ class Chatroom:
         if users is None:
             users: list[int] = list
 
-        self.id = self._ROOM_ID
+        self.room_id = self._ROOM_ID
         self.__class__._ROOM_ID += 1
         self.name = name
         self.users = users
@@ -34,7 +34,7 @@ class Chatroom:
         usrs_dictionary = [User.to_dictionary(usr) for usr in obj.users]
         msgs_dictionary = [Message.to_dictionary(msg) for msg in obj.messages]
         return {
-            'id': obj.id,
+            'room_id': obj.room_id,
             'name': obj.name,
             'users': usrs_dictionary,
             'messages': msgs_dictionary

@@ -65,6 +65,7 @@ class UserList(Resource):
         return {"new user": new_user}
 
 
+
 # Shows a list of rooms
 class RoomList(Resource):
 
