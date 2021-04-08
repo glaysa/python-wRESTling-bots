@@ -16,8 +16,8 @@ class User:
 @dataclass()
 class Chatroom:
     name: str
-    users: list[str] = field(default=[])
-    messages: list[str] = field(default=[])
+    users: list[str] = field(default=list)
+    messages: list[str] = field(default_factory=list)
     room_id: str = field(default_factory=get_id)
 
 
