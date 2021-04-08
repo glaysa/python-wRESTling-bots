@@ -13,7 +13,7 @@ def get_login_page():
 
 @app.route("/register")
 def get_register():
-    return render_template("register.html",msg="will send a message here from the /api/users (post)")
+    return render_template("register.html", msg="will send a message here from the /api/users (post)")
 
 
 @app.route("/home")
@@ -26,6 +26,7 @@ def get_home():
 def get_profile_page():
     # user object can be sent in
     return render_template("profile.html")
+
 
 @app.route("/chatroom")
 def get_room():
