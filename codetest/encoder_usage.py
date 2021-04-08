@@ -1,8 +1,8 @@
-from models.user import User
-from models.message import Message, Content
-from models.chatroom import Chatroom
+from data.user import User
+from data.message import Message, Content
+from data.chatroom import Chatroom
 import json
-from models.json_serializer import ModelEncoder
+from data.json_serializer import ModelEncoder
 
 print("###############MSG###################")
 

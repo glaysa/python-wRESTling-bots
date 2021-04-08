@@ -2,7 +2,7 @@ from flask import render_template, request, redirect, url_for
 from app import api
 from flask_restful import Resource, abort, reqparse
 from dummy_data import users, rooms, messages
-from models.user import User
+from data.models import User, Message, Chatroom
 
 users_list: list[User] = []
 rooms = rooms
