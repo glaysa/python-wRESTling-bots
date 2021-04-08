@@ -28,6 +28,7 @@ def get_profile_page():
     return render_template("profile.html")
 
 
-@app.route("/chatroom")
+@app.route("/chatroom")      # for now we should use the route below.
+@app.route("/chatroom/<room_id>")
 def get_room():
     return render_template("chatroom.html")
