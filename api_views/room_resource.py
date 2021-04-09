@@ -1,20 +1,20 @@
 from flask import request, redirect, url_for, render_template, session
 from flask_restful import Resource
 from api_views import room_list
-from dataclasses import asdict
+from data.json_serializer import asdict
 from data.models import Chatroom as Room
 
 
 # Shows a single room
 class SingleRoom(Resource):
 
-    def get(self, room_id: int = None):
+    def get(self, room_id: str = None):
         for room in room_list:
             if room.room_id == room_id:
                 return asdict(room)
         return {"message": "Room not found"}, 404
 
-    def delete(self, room_id: int = None):
+    def delete(self, room_id: str = None):
         for room in room_list:
             if room.room_id == room_id:
                 room_list.remove(room)
