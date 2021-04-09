@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, render_template, session
+from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import room_list
 from data.json_serializer import asdict
@@ -14,11 +14,13 @@ class SingleRoom(Resource):
                 return asdict(room)
         return {"message": "Room not found"}, 404
 
-    def delete(self, room_id: str = None):
+    # Deletes a room
+    def post(self, room_id: str = None):
         for room in room_list:
             if room.room_id == room_id:
                 room_list.remove(room)
-                return redirect(url_for('get_home', msg=f"{room} is deleted"))
+                flash(f"Room '{room.name}' has been deleted")
+                return redirect(url_for('get_home'))
         return {"message": "Room not found"}, 404
 
 
@@ -32,7 +34,7 @@ class RoomList(Resource):
         if request.method == 'POST':
             room_name = request.form['room_name']
             creator = session['user']
-            room = Room(name=room_name, users=[creator])
+            room = Room(name=room_name, creator=creator, users=[creator])
             room_list.append(room)
             status_msg = room_name
             return redirect(url_for('get_home', msg=status_msg))
