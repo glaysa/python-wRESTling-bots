@@ -1,8 +1,11 @@
 from flask import render_template, request, redirect, url_for
 from app import api
 from flask_restful import Resource, abort, reqparse
+import json
 from dummy_data import users, rooms, messages
 from data.models import User, Message, Chatroom
+from data.json_serializer import ModelEncoder
+from dataclasses import asdict
 
 users_list: list[User] = []
 rooms = rooms
@@ -48,23 +51,15 @@ class SingleRoom(Resource):
 class UserList(Resource):
 
     def get(self):
-        return users_list
+
+        return [json.dumps(usr, cls=ModelEncoder, indent=2) for usr in users_list]
 
     def post(self):
-        status_msg = None
         if request.method == 'POST':
-            '''user = {
-                'username': request.form['username'],
-                'personality': request.form['personality']
-            }
-            print(type(user))
-            users.append(user)
-            status_msg = f"User {user['username']} created"'''
-
             username = request.form['username']
             personality = request.form['personality']
-            new_user = User.json_to_user(username, personality)
-            users_list.append(new_user)
+            user = User(username=username,personality=personality)
+            users_list.append(user)
             status_msg = username
             return redirect(url_for('get_home', msg=status_msg))
 
