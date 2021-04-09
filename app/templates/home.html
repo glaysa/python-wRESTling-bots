@@ -15,10 +15,11 @@
                                        style="text-decoration: none;">Open
                                     </a>
                                 {% else %}
-                                    <a href="chatroom"
-                                       class="px-auto pt-1 m-2  fw-bolder btn btn-outline-success btn-sm"
-                                       style="text-decoration: none;">Join
-                                    </a>
+                                    <form action="/api/room/{{ room.room_id }}/users" class="form" method="post">
+                                        <input type="submit" value="Join"
+                                           class="px-auto pt-1 m-2  fw-bolder btn btn-outline-success btn-sm"
+                                           style="text-decoration: none;">
+                                    </form>
                                 {% endif %}
                         </div>
                     {% endfor %}
