@@ -1,7 +1,7 @@
 from flask import session, redirect, url_for
 from flask_restful import Resource
 from api_views import room_list
-from data.json_serializer import asdict
+from dataclasses import asdict
 
 
 # Shows a list of users from a specific room

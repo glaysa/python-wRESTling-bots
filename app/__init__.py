@@ -12,6 +12,10 @@ app.secret_key = '354b9b92b934613f14afe99c94a82415a9a3d49a'
 api = Api(app)
 login_manager = LoginManager()
 login_manager.login_view = 'get_login'
+# for the flash()
+login_manager.login_message = "Login required to view this page"
+login_manager.login_message_category = "warning"
+
 login_manager.init_app(app)
 
 # API endpoints
