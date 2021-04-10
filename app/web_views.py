@@ -37,8 +37,14 @@ def get_profile_page():
 @app.route("/chatroom")  # for now we should use the route below.
 @app.route("/chatroom/<room_id>")
 @login_required
-def get_room():
-    return render_template("chatroom.html")
+def get_room(room_id):
+    active_room = None
+    active_user = session['user']
+
+    for room in room_list:
+        if room.room_id == room_id:
+            active_room = room
+    return render_template(f"chatroom.html", room=active_room, user=active_user)
 
 
 @app.route("/", methods=['GET', 'POST'])

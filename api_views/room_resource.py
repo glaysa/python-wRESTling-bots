@@ -19,7 +19,7 @@ class SingleRoom(Resource):
         for room in room_list:
             if room.room_id == room_id:
                 room_list.remove(room)
-                flash(f"Room '{room.name}' has been deleted")
+                flash(message=f"Room '{room.name}' has been deleted", category="success")
                 return redirect(url_for('get_home'))
         return {"message": "Room not found"}, 404
 
@@ -36,8 +36,9 @@ class RoomList(Resource):
             creator = session['user']
             room = Room(name=room_name, creator=creator, users=[creator])
             room_list.append(room)
-            status_msg = room_name
-            return redirect(url_for('get_home', msg=status_msg))
 
-        status_msg = "Cannot create room, please try again!"
-        return render_template('home.html', msg=status_msg)
+            flash(message=f"User '{room.name}' has been successfully created!", category="success")
+            return redirect(url_for('get_home'))
+
+        flash(message="Cannot create room, please try again!", category="warning")
+        return render_template('home.html')

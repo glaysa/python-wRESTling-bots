@@ -10,7 +10,7 @@
                         <div class="mt-3">
                             <h4>{{ room.name }}</h4>
                                 {% if user in room.users %}
-                                    <a href="chatroom"
+                                    <a href="chatroom/{{ room.room_id }}"
                                        class="px-auto pt-1 m-2 d-inline fw-bolder btn btn-outline-success btn-sm"
                                        style="text-decoration: none;">Open
                                     </a>
