@@ -45,7 +45,8 @@ def get_room():
 @app.route("/login", methods=['GET', 'POST'])
 def get_login():
     if 'user' in session:
-        return redirect(url_for('get_home'))
+        the_current_user = session['user']
+        return render_template('home.html', user=the_current_user, rooms=room_list)
 
     if request.method == "POST":
         username = request.form.get('username')
@@ -53,11 +54,9 @@ def get_login():
         if user and user.check_username(username):
             login_user(user)
             session['user'] = user
-            #flash() Not needed
-            return redirect(url_for('get_home'))
-
+            # flash() Not needed
+            return render_template('home.html', user=user, rooms=room_list)
         flash(message="Wrong username, please try again or create a new user", category="warning")
-
 
     return render_template('login.html')
 

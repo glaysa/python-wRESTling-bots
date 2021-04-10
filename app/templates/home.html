@@ -15,14 +15,14 @@
                                        style="text-decoration: none;">Open
                                     </a>
                                     {% if user == room.creator %}
-                                        <form action="/api/room/{{ room.room_id }}" class="form d-inline" method="post">
+                                        <form action="/api/room/{{ room.room_id }}" class="form d-inline" method="POST">
                                             <input type="submit" value="Delete"
                                                class="px-auto pt-1 m-2  fw-bolder btn btn-outline-danger btn-sm"
                                                style="text-decoration: none;">
                                         </form>
                                     {% endif %}
                                 {% else %}
-                                    <form action="/api/room/{{ room.room_id }}/users" class="form" method="post">
+                                    <form action="/api/room/{{ room.room_id }}/users" class="form" method="POST">
                                         <input type="submit" value="Join"
                                            class="px-auto pt-1 m-2  fw-bolder btn btn-outline-success btn-sm"
                                            style="text-decoration: none;">

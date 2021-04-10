@@ -20,6 +20,7 @@ class SingleUser(Resource):
             if user.usr_id == user_id:
                 user_list.remove(user)
                 flash(message=f"The user '{user.username}' has been deleted", category="success")
+                session.pop('user', None)
                 return redirect(url_for('get_login'))
         return {"message": "User not found"}, 404
 
