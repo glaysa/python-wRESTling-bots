@@ -36,7 +36,6 @@ class RoomList(Resource):
             creator = session['user']
             room = Room(name=room_name, creator=creator, users=[creator])
             room_list.append(room)
-
             flash(message=f"User '{room.name}' has been successfully created!", category="success")
             return redirect(url_for('get_home'))
 

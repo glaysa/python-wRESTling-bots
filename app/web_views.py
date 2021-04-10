@@ -17,7 +17,7 @@ def get_register():
 @app.route("/home")
 @login_required
 def get_home():
-    user = current_user
+    user = session['user']
     if 'user' not in session:
         user = request.args.get('user')
 
