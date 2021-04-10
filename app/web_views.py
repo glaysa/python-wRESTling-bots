@@ -1,7 +1,7 @@
 from flask_login import login_user, login_required, logout_user, current_user
 from flask import render_template, request, redirect, url_for, session, flash
 
-from api_views.login import get_user
+from app.login import get_user
 from app import app
 from api_views import room_list
 
