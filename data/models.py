@@ -12,6 +12,25 @@ class User:
     personality: str
     usr_id: str = field(default_factory=get_id)
 
+    def check_username(self, username):
+        return username == self.username
+
+    def get_id(self):
+        return self.username
+
+    @staticmethod
+    def is_active():
+        return True
+
+    @staticmethod
+    def is_authenticated():
+        return True
+
+    @staticmethod
+    def is_anonymous():
+        return False
+
+
 
 @dataclass()
 class Chatroom:

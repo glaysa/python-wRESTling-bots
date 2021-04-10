@@ -34,9 +34,8 @@ class UserList(Resource):
             personality = request.form['personality']
             user = User(username=username, personality=personality)
             user_list.append(user)
-            status_msg = username
-            session['user'] = user
-            return redirect(url_for('get_home', msg=status_msg))
+            #flash()
+            return redirect(url_for('get_login'))
 
         status_msg = "Registration failed, please try again!"
         return render_template('register.html', msg=status_msg)
