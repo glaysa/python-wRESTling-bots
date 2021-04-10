@@ -48,13 +48,6 @@
 
                 <div class="mt-5 w-100">
                     <h3>Create a new room here:</h3>
-                    {% if msg %}
-                        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            {{ msg }}
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    {% endif %}
-
                     <form action="/api/rooms" method="POST" class=" border rounded row mx-auto" style=" background: #dbcaca;">
                         <label for="name" class="fw-bolder form-label w-75 mt-3 mx-auto">Give your room a name:</label>
                         <input type="text" name="room_name" id="name" class="form-control w-75 mx-auto">

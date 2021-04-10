@@ -19,8 +19,8 @@ class SingleUser(Resource):
         for user in user_list:
             if user.usr_id == user_id:
                 user_list.remove(user)
-                flash(f"The user '{user.username}' has been deleted")
-                return redirect(url_for('get_register'))
+                flash(message=f"The user '{user.username}' has been deleted", category="success")
+                return redirect(url_for('get_login'))
         return {"message": "User not found"}, 404
 
 
@@ -37,8 +37,8 @@ class UserList(Resource):
             user = User(username=username, personality=personality)
             user_list.append(user)
 
-            flash(f"User '{user.username}' has been successfully registered!")
+            flash(message=f"User '{user.username}' has been successfully registered!", category="success")
             return redirect(url_for('get_login'))
 
-        flash("Registration failed, please try again!")
-        return render_template('register.html')
+        flash(message="Registration failed, please try again!", category="warning")
+        return redirect(url_for('get_register'))
