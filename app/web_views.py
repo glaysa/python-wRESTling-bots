@@ -1,5 +1,5 @@
 from flask_login import login_user, login_required, logout_user, current_user
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, session
 
 from api_views.login import get_user
 from app import app
@@ -9,7 +9,7 @@ from api_views import room_list
 @app.route("/register")
 def get_register():
     if current_user.is_authenticated:
-        return render_template('home.html', user=current_user, rooms=room_list)
+        return redirect(url_for("get_home"))
 
     return render_template("register.html", msg="will send a message here from the /api/users (post)")
 
@@ -22,8 +22,6 @@ def get_home():
         user = request.args.get('user')
 
     return render_template("home.html", rooms=room_list, user=user)
-
-
 
 
 @app.route("/profile")
@@ -42,9 +40,7 @@ def get_room():
 @app.route("/", methods=['GET', 'POST'])
 @app.route("/login", methods=['GET', 'POST'])
 def get_login():
-    print(current_user.is_authenticated)
-
-    if current_user.is_authenticated:
+    if 'USERNAME' in session:
         return redirect(url_for('get_home'))
 
     if request.method == "POST":
@@ -52,6 +48,7 @@ def get_login():
         user = get_user(username)
         if user and user.check_username(username):
             login_user(user)
+            session["USERNAME"] = username
             # flash()
             return render_template('home.html', user=user, rooms=room_list)
     # flash()
@@ -62,4 +59,5 @@ def get_login():
 @login_required
 def logout():
     logout_user()
+    session.pop('USERNAME', None)
     return redirect(url_for('get_login'))

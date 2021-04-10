@@ -1,7 +1,7 @@
-from flask import request, redirect, url_for, render_template, session
+from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import user_list
-from data.json_serializer import asdict
+from dataclasses import asdict
 from data.models import User
 
 
@@ -14,11 +14,13 @@ class SingleUser(Resource):
                 return asdict(user)
         return {"message": "User not found"}, 404
 
-    def delete(self, user_id: str):
+    # Deletes a user
+    def post(self, user_id: str):
         for user in user_list:
             if user.usr_id == user_id:
                 user_list.remove(user)
-                return redirect(url_for('get_register', msg=f"{user} is deleted"))
+                flash(f"The user '{user.username}' has been deleted")
+                return redirect(url_for('get_register'))
         return {"message": "User not found"}, 404
 
 
@@ -34,8 +36,9 @@ class UserList(Resource):
             personality = request.form['personality']
             user = User(username=username, personality=personality)
             user_list.append(user)
-            #flash()
+
+            flash(f"User '{user.username}' has been successfully registered!")
             return redirect(url_for('get_login'))
 
-        status_msg = "Registration failed, please try again!"
-        return render_template('register.html', msg=status_msg)
+        flash("Registration failed, please try again!")
+        return render_template('register.html')

@@ -1,8 +1,7 @@
-from dataclasses import asdict
-
 from flask import session, redirect, url_for
 from flask_restful import Resource
 from api_views import room_list
+from data.json_serializer import asdict
 
 
 # Shows a list of users from a specific room
@@ -26,7 +25,7 @@ class RoomUserList(Resource):
 # Shows a list of messages from a specific room
 class RoomMessageList(Resource):
 
-    def get(self, room_id: int):
+    def get(self, room_id: str):
         for room in room_list:
             if room.room_id == room_id:
                 return room.messages

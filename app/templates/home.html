@@ -11,9 +11,16 @@
                             <h4>{{ room.name }}</h4>
                                 {% if user in room.users %}
                                     <a href="chatroom"
-                                       class="px-auto pt-1 m-2  fw-bolder btn btn-outline-success btn-sm"
+                                       class="px-auto pt-1 m-2 d-inline fw-bolder btn btn-outline-success btn-sm"
                                        style="text-decoration: none;">Open
                                     </a>
+                                    {% if user == room.creator %}
+                                        <form action="/api/room/{{ room.room_id }}" class="form d-inline" method="post">
+                                            <input type="submit" value="Delete"
+                                               class="px-auto pt-1 m-2  fw-bolder btn btn-outline-danger btn-sm"
+                                               style="text-decoration: none;">
+                                        </form>
+                                    {% endif %}
                                 {% else %}
                                     <form action="/api/room/{{ room.room_id }}/users" class="form" method="post">
                                         <input type="submit" value="Join"
@@ -43,7 +50,7 @@
                     <h3>Create a new room here:</h3>
                     {% if msg %}
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
-                            User <strong>{{ msg }}</strong> successfully registered!
+                            {{ msg }}
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     {% endif %}

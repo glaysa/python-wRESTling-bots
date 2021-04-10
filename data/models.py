@@ -31,10 +31,10 @@ class User:
         return False
 
 
-
 @dataclass()
 class Chatroom:
     name: str
+    creator: str
     users: list[str] = field(default=list)
     messages: list[str] = field(default_factory=list)
     room_id: str = field(default_factory=get_id)
