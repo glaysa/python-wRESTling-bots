@@ -10,7 +10,6 @@ from data.models import Chatroom, User, Message, Content
 
 @socket.on('join_room')
 def handle_join_room_event(data):
-    print(f"{data['username']} joined {data['room_name']}")
     join_room(data['room_id'])
     socket.emit('user_joined', data)
 
@@ -19,7 +18,16 @@ def handle_join_room_event(data):
 def handle_send_message_event(data):
     content = Content(message=data['message'])
     message = Message(sender=data['sender'], content=content)
+    the_current_room = get_room(data['room_id'])
+    the_current_room.messages.append(message.msg_id) # the post method
     socket.emit('receive_message', data, room=data['room_id'])
+
+
+# helper:
+def get_room(room_id: str) -> Chatroom:
+    for room in room_list:
+        if room.room_id == room_id:
+            return room
 
 '''
 # helpers:

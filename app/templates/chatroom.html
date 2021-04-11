@@ -13,10 +13,9 @@
     </div>
 
     <div class="d-flex p-2 mt-2 justify-content-around align-items-center">
-        <form id="chatting-form" action="/api/room/{{ room.room_id }}/{{ user.usr_id }}/messages" method="post"
-              class="form w-50">
+        <form id="chatting-form" class="form w-50">
             <div class="form-group">
-                <input id="message-input" type="text" name="message" placeholder="type here..." required class="form-control input-group">
+                <input id="message-input" type="text" name="message" placeholder="type here..." class="form-control input-group">
                 <input type="submit" name="reply-btn" value="Send" class="btn btn-primary mt-3 input-group">
             </div>
         </form>
@@ -42,24 +41,28 @@
 
                 chattingForm.on('submit',(event) => {
                     event.preventDefault();
-                    const message = $("#message-input");
-                    if(message.val().trim().length) {
+                    const messageInput = $("#message-input");
+                    if(messageInput.val().trim().length) {
                         socket.emit('send_message', {
-                            message: message.val(),
+                            message: messageInput.val(),
                             sender: "{{ user.username }}",
-                            room_id: "{{ room.id }}"
+                            room_id: "{{ room.room_id }}"
                         });
+                        messageInput.val("").focus();
                     }
                 });
             });
 
             socket.on('receive_message', (data) => {
-                const receivedMessageElement = `<div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
-                    <p class="p-0 fs-6 text-md-center m-2">${data.sender}: ${data.message}</p>
-                </div>`
+                const receivedMessageElement = `
+                    <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
+                        <p class="p-0 fs-6 text-md-center m-2">${data.sender}: ${data.message}</p>
+                    </div>`
 
-                const sendedMessageElement = `<div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
-                    <p class="p-0 fs-6 text-md-center m-2">${data.message}</p></div>`
+                const sendedMessageElement = `
+                    <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
+                        <p class="p-0 fs-6 text-md-center m-2">${data.message}</p>
+                    </div>`
 
                 if(data.sender === "{{ user.username }}" ){
                     chatContainer.append(sendedMessageElement);
