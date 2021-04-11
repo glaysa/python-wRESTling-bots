@@ -8,6 +8,7 @@ $ pip install Flask
 $ pip install restful-flask
 $ pip install flask-login
 $ pip install flask-socketio
+$ pip install eventlet
 ```
 
 ### not sure if it is needed to include in the execution files: 
