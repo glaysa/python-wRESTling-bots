@@ -32,6 +32,6 @@ def json2User(jsn: str) -> User:
     dct = json.loads(jsn)
     username = dct['username']
     personality = dct['personality']
-    usr_id = dct['usr_id']
+    usr_id = dct['user_id']
     return User(username=username, personality=personality,
                 usr_id=usr_id)

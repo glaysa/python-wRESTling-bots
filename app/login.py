@@ -1,4 +1,4 @@
-from app import login_manager, app
+from app import login_manager
 from api_views import user_list
 
 
