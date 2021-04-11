@@ -10,7 +10,7 @@ def get_id() -> str:
 class User:
     username: str
     personality: str
-    usr_id: str = field(default_factory=get_id)
+    user_id: str = field(default_factory=get_id)
 
     def check_username(self, username):
         return username == self.username
@@ -43,7 +43,7 @@ class Chatroom:
 @dataclass()
 class Content:
     message: str
-    action: str
+    action: str = field(default=None)
 
 
 @dataclass()

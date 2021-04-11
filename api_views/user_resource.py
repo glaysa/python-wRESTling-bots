@@ -10,14 +10,14 @@ class SingleUser(Resource):
 
     def get(self, user_id: str):
         for user in user_list:
-            if user.usr_id == user_id:
+            if user.user_id == user_id:
                 return asdict(user)
         return {"message": "User not found"}, 404
 
     # Deletes a user
     def post(self, user_id: str):
         for user in user_list:
-            if user.usr_id == user_id:
+            if user.user_id == user_id:
                 user_list.remove(user)
                 flash(message=f"The user '{user.username}' has been deleted", category="success")
                 session.pop('user', None)

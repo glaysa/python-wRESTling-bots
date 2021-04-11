@@ -48,7 +48,7 @@ class RoomUserMessageList(Resource):
             return {"message": "Room not found"}, 404
 
         for user in current_room.users:
-            if user['usr_id'] == user_id:
+            if user['user_id'] == user_id:
                 current_user = user
         if current_user is None:
             return {"message": "User not found"}, 404
@@ -70,7 +70,7 @@ class RoomUserMessageList(Resource):
             return {"message": "Room not found"}, 404
 
         for user in current_room.users:
-            if user['usr_id'] == user_id:
+            if user['user_id'] == user_id:
                 current_user = user
         if current_user is None:
             return {"message": "User not found"}, 404

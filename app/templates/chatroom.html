@@ -7,22 +7,14 @@
         <a href="/home" class="col-md-1 fs-4 btn btn-secondary">Home</a>
     </div>
 
-    <div class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto" style="min-height:600px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue;width: 40%;">
-        {% for msg in room.messages %}
-            {% if msg.sender == user %}
-                <div class="col-md-5 bg-primary mb-3 align-self-end border rounded-pill">
-                    <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
-                </div>
-            {% else %}
-                <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
-                    <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
-                </div>
-            {% endif %}
-        {% endfor %}
+    <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
+         style="min-height:600px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue;width: 40%;">
+
     </div>
 
     <div class="d-flex p-2 mt-2 justify-content-around align-items-center">
-        <form action="/api/room/{{ room.room_id }}/{{ user.usr_id }}/messages" method="post" class="form w-50">
+        <form id="chatting-form" action="/api/room/{{ room.room_id }}/{{ user.usr_id }}/messages" method="post"
+              class="form w-50">
             <div class="form-group">
                 <input type="text" name="message" placeholder="type here..." required class="form-control input-group">
                 <input type="submit" name="reply-btn" value="Send" class="btn btn-primary mt-3 input-group">
@@ -30,3 +22,32 @@
         </form>
     </div>
 {% endblock %}
+
+{% block script %}
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
+            console.log($("#chat-container"))
+
+            socket.on('connect', function () {
+                socket.emit('join_room', {
+                    user_id: "{{ user.user_id }}",
+                    username: "{{ user.username }}",
+                    room_name: "{{ room.name }}",
+                    room_id: "{{ room.room_id }}"
+                });
+            });
+
+            socket.on('user_joined', function(data){
+                //console.log(data)
+                const element = `<p> ${data.username} joined the room </p>`;
+                $("#chat-container").append(element)
+            });
+        });
+
+
+    </script>
+{% endblock %}
+

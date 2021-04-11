@@ -17,7 +17,7 @@ login_manager.login_view = 'get_login'
 login_manager.login_message = "Login required to view this page"
 login_manager.login_message_category = "warning"
 login_manager.init_app(app)
-socketio = SocketIO(app)
+socket = SocketIO(app)
 
 # API endpoints
 api.add_resource(UserList, "/api/users")
@@ -28,4 +28,4 @@ api.add_resource(RoomUserList, "/api/room/<string:room_id>/users")
 api.add_resource(RoomMessageList, "/api/room/<string:room_id>/messages")
 api.add_resource(RoomUserMessageList, "/api/room/<string:room_id>/<string:user_id>/messages")
 
-from app import web_views, login
+from app import web_views, login, socket_views
