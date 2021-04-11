@@ -8,7 +8,7 @@
     </div>
 
     <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
-         style="min-height:600px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue;width: 40%;">
+         style="min-height:400px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue; width: 40%;">
 
     </div>
 
@@ -16,7 +16,7 @@
         <form id="chatting-form" action="/api/room/{{ room.room_id }}/{{ user.usr_id }}/messages" method="post"
               class="form w-50">
             <div class="form-group">
-                <input type="text" name="message" placeholder="type here..." required class="form-control input-group">
+                <input id="message-input" type="text" name="message" placeholder="type here..." required class="form-control input-group">
                 <input type="submit" name="reply-btn" value="Send" class="btn btn-primary mt-3 input-group">
             </div>
         </form>
@@ -27,24 +27,54 @@
 
     <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function () {
+        $(document).ready(() => {
             const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
-            console.log($("#chat-container"))
+            const chatContainer = $("#chat-container");
+            const chattingForm = $("#chatting-form");
 
-            socket.on('connect', function () {
+            socket.on('connect', () => {
                 socket.emit('join_room', {
-                    user_id: "{{ user.user_id }}",
                     username: "{{ user.username }}",
+                    user_id: "{{ user.user_id }}",
                     room_name: "{{ room.name }}",
                     room_id: "{{ room.room_id }}"
                 });
+
+                chattingForm.on('submit',(event) => {
+                    event.preventDefault();
+                    const message = $("#message-input");
+                    if(message.val().trim().length) {
+                        socket.emit('send_message', {
+                            message: message.val(),
+                            sender: "{{ user.username }}",
+                            room_id: "{{ room.id }}"
+                        });
+                    }
+                });
             });
 
-            socket.on('user_joined', function(data){
-                //console.log(data)
-                const element = `<p> ${data.username} joined the room </p>`;
-                $("#chat-container").append(element)
+            socket.on('receive_message', (data) => {
+                const receivedMessageElement = `<div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
+                    <p class="p-0 fs-6 text-md-center m-2">${data.sender}: ${data.message}</p>
+                </div>`
+
+                const sendedMessageElement = `<div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
+                    <p class="p-0 fs-6 text-md-center m-2">${data.message}</p></div>`
+
+                if(data.sender === "{{ user.username }}" ){
+                    chatContainer.append(sendedMessageElement);
+                }else {
+                    chatContainer.append(receivedMessageElement);
+                }
             });
+
+            socket.on('user_joined',(data) => {
+                //console.log(data)
+                const element = `<p class="mx-auto fs-6" style="color: black"> ----> ${data.username} joined the room <---- </p>`;
+                chatContainer.append(element)
+            });
+
+
         });
 
 
