@@ -34,7 +34,6 @@ def get_profile_page():
     return render_template("profile.html", user=user)
 
 
-@app.route("/chatroom")  # for now we should use the route below.
 @app.route("/chatroom/<room_id>")
 @login_required
 def get_room(room_id):

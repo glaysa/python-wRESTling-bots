@@ -17,9 +17,10 @@ def handle_join_room_event(data):
 @socket.on('send_message')
 def handle_send_message_event(data):
     content = Content(message=data['message'])
-    message = Message(sender=data['sender'], content=content)
+    sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
+    message = Message(sender=sender, content=content)
     the_current_room = get_room(data['room_id'])
-    the_current_room.messages.append(message.msg_id) # the post method
+    the_current_room.messages.append(message)  # the post method
     socket.emit('receive_message', data, room=data['room_id'])
 
 
@@ -28,23 +29,3 @@ def get_room(room_id: str) -> Chatroom:
     for room in room_list:
         if room.room_id == room_id:
             return room
-
-'''
-# helpers:
-def get_user_by_id(user_id:str) -> User:
-    pass
-
-
-def get_room(room_id: str) -> Chatroom:
-    for room in room_list:
-        if room.room_id == room_id:
-            return room
-
-
-def is_user_in_room(user_id: str, room_id: str) -> bool:
-    if user_id in get_room(room_id=room_id).users:
-        return True
-    return False
-
-
-'''
