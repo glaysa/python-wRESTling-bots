@@ -2,7 +2,7 @@ from flask import session, redirect, url_for, request
 from flask_restful import Resource
 from api_views import room_list
 from dataclasses import asdict
-from data.models import Content, Message
+from data.models import Content, Message, User, Chatroom
 
 
 # Shows a list of users from a specific room
@@ -18,6 +18,7 @@ class RoomUserList(Resource):
         for room in room_list:
             if room.room_id == room_id:
                 user = session['user']
+                user = User(username=user['username'], personality=user['personality'], user_id=user['user_id'])
                 room.users.append(user)
                 return redirect(url_for('get_home'))
         return {"message": "Room not found"}, 404
@@ -48,13 +49,13 @@ class RoomUserMessageList(Resource):
             return {"message": "Room not found"}, 404
 
         for user in current_room.users:
-            if user.user_id == user_id:
+            if user['user_id'] == user_id:
                 current_user = user
         if current_user is None:
             return {"message": "User not found"}, 404
 
         for msg in current_room.messages:
-            if msg.sender == current_user:
+            if msg.sender.user_id == current_user['user_id']:
                 message_list.append(msg)
         return [asdict(message) for message in message_list]
 
