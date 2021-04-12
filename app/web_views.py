@@ -40,11 +40,11 @@ def get_profile_page():
 def get_room(room_id):
     active_room = None
     active_user = session['user']
-
     for room in room_list:
         if room.room_id == room_id:
             active_room = room
-    return render_template(f"chatroom.html", room=active_room, user=active_user, bot=assign_bot(active_user['personality']))
+    return render_template(f"chatroom.html", room=active_room, user=active_user,
+                           bot=assign_bot(active_user['personality']))
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -60,8 +60,9 @@ def get_login():
         if user and user.check_username(username):
             login_user(user)
             session['user'] = user
+            return redirect(url_for('get_home'))
             # flash() Not needed
-            return render_template('home.html', user=user, rooms=room_list)
+            #return render_template('home.html', user=user, rooms=room_list)
         flash(message="Wrong username, please try again or create a new user", category="warning")
 
     return render_template('login.html')
