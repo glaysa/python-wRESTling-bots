@@ -11,7 +11,7 @@ class RoomUserList(Resource):
     def get(self, room_id: str):
         for room in room_list:
             if room.room_id == room_id:
-                return room.users
+                return [asdict(user) for user in room.users]
         return {"message": "Room not found"}, 404
 
     def post(self, room_id: str):
@@ -29,7 +29,7 @@ class RoomMessageList(Resource):
     def get(self, room_id: str):
         for room in room_list:
             if room.room_id == room_id:
-                return room.messages
+                return [asdict(message) for message in room.messages]
         return {"message": "Room not found"}, 404
 
 
@@ -56,7 +56,7 @@ class RoomUserMessageList(Resource):
         for msg in current_room.messages:
             if msg.sender == current_user:
                 message_list.append(msg)
-        return message_list
+        return [asdict(message) for message in message_list]
 
     ''' Det skjer i send_message event der er det unødvendig å ha med her. 
     def post(self, room_id: int, user_id: int):
