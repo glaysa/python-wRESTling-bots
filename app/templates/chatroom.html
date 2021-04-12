@@ -22,14 +22,14 @@
         {% endfor %}
     </div>
 
-    <div class="d-flex p-2 mt-2 justify-content-around align-items-center">
+    <!--<div class="d-flex p-2 mt-2 justify-content-around align-items-center">
         <form id="chatting-form" class="form w-50">
             <div class="form-group">
                 <input id="message-input" type="text" name="message" placeholder="type here..." class="form-control input-group">
                 <input type="submit" name="reply-btn" value="Send" class="btn btn-primary mt-3 input-group">
             </div>
         </form>
-    </div>
+    </div>-->
 {% endblock %}
 
 {% block script %}
@@ -41,6 +41,14 @@
             const chatContainer = $("#chat-container");
             const chattingForm = $("#chatting-form");
 
+            socket.emit('send_message', {
+                            message: "{{ bot(None, True) }}",
+                            username: "{{ user.username }}",
+                            personality: "{{ user.personality }}",
+                            user_id: "{{ user.user_id }}",
+                            room_id: "{{ room.room_id }}"
+                        });
+
             socket.on('connect', () => {
                 socket.emit('join_room', {
                     username: "{{ user.username }}",
@@ -49,12 +57,12 @@
                     room_id: "{{ room.room_id }}"
                 });
 
-                chattingForm.on('submit',(event) => {
+                /*chattingForm.on('submit',(event) => {
                     event.preventDefault();
                     const messageInput = $("#message-input");
                     if(messageInput.val().trim().length) {
                         socket.emit('send_message', {
-                            message: messageInput.val(),
+                            message: "{{ bot(None, True) }}",
                             username: "{{ user.username }}",
                             personality: "{{ user.personality }}",
                             user_id: "{{ user.user_id }}",
@@ -62,7 +70,7 @@
                         });
                         messageInput.val("").focus();
                     }
-                });
+                });*/
             });
 
             socket.on('receive_message', (data) => {

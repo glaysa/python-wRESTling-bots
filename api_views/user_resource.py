@@ -2,6 +2,8 @@ from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import user_list
 from dataclasses import asdict
+
+from app.bots import assign_bot
 from data.models import User
 
 
@@ -35,6 +37,7 @@ class UserList(Resource):
         if request.method == 'POST':
             username = request.form['username']
             personality = request.form['personality']
+            assign_bot(personality)
             user = User(username=username, personality=personality)
             user_list.append(user)
 

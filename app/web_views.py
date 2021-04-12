@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from app.login import get_user
 from app import app
 from api_views import room_list
+from app.bots import assign_bot
 
 
 @app.route("/register")
@@ -43,7 +44,7 @@ def get_room(room_id):
     for room in room_list:
         if room.room_id == room_id:
             active_room = room
-    return render_template(f"chatroom.html", room=active_room, user=active_user)
+    return render_template(f"chatroom.html", room=active_room, user=active_user, bot=assign_bot(active_user['personality']))
 
 
 @app.route("/", methods=['GET', 'POST'])
