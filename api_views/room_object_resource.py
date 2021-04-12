@@ -48,17 +48,17 @@ class RoomUserMessageList(Resource):
             return {"message": "Room not found"}, 404
 
         for user in current_room.users:
-            if user['user_id'] == user_id:
+            if user.user_id == user_id:
                 current_user = user
         if current_user is None:
             return {"message": "User not found"}, 404
 
         for msg in current_room.messages:
-            if msg['sender'] == current_user:
+            if msg.sender == current_user:
                 message_list.append(msg)
-
         return message_list
 
+    ''' Det skjer i send_message event der er det unødvendig å ha med her. 
     def post(self, room_id: int, user_id: int):
         current_room = None
         current_user = None
@@ -81,4 +81,4 @@ class RoomUserMessageList(Resource):
         current_room.messages.append(asdict(message))
 
         return redirect(url_for('get_room', room_id=current_room.room_id))
-
+    '''

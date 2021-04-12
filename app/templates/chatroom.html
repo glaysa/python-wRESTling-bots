@@ -9,7 +9,17 @@
 
     <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
          style="min-height:400px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue; width: 40%;">
-
+           {% for msg in room.messages %}
+            {% if msg.sender.user_id == user.user_id %}
+                <div class="col-md-5 bg-primary mb-3 align-self-end border rounded-pill">
+                    <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
+                </div>
+            {% else %}
+                <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
+                    <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
+                </div>
+            {% endif %}
+        {% endfor %}
     </div>
 
     <div class="d-flex p-2 mt-2 justify-content-around align-items-center">
@@ -24,7 +34,7 @@
 
 {% block script %}
 
-    <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" crossorigin="anonymous"></script>
+
     <script>
         $(document).ready(() => {
             const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
@@ -45,7 +55,9 @@
                     if(messageInput.val().trim().length) {
                         socket.emit('send_message', {
                             message: messageInput.val(),
-                            sender: "{{ user.username }}",
+                            username: "{{ user.username }}",
+                            personality: "{{ user.personality }}",
+                            user_id: "{{ user.user_id }}",
                             room_id: "{{ room.room_id }}"
                         });
                         messageInput.val("").focus();
@@ -56,16 +68,16 @@
             socket.on('receive_message', (data) => {
                 const receivedMessageElement = `
                     <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
-                        <p class="p-0 fs-6 text-md-center m-2">${data.sender}: ${data.message}</p>
+                        <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message}</p>
                     </div>`
 
-                const sendedMessageElement = `
+                const sentMessageElement = `
                     <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.message}</p>
                     </div>`
 
-                if(data.sender === "{{ user.username }}" ){
-                    chatContainer.append(sendedMessageElement);
+                if(data.user_id === "{{ user.user_id }}" ){
+                    chatContainer.append(sentMessageElement);
                 }else {
                     chatContainer.append(receivedMessageElement);
                 }
