@@ -43,8 +43,10 @@ def get_room(room_id):
     for room in room_list:
         if room.room_id == room_id:
             active_room = room
-    return render_template(f"chatroom.html", room=active_room, user=active_user,
-                           bot=assign_bot(active_user['personality']))
+    return render_template(f"chatroom.html", room=active_room, user=active_user)
+
+
+# bot=assign_bot(active_user['personality'])
 
 
 @app.route("/", methods=['GET', 'POST'])

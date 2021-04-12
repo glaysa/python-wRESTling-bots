@@ -9,7 +9,7 @@
 
     <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
          style="min-height:400px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue; width: 40%;">
-           {% for msg in room.messages %}
+        {% for msg in room.messages %}
             {% if msg.sender.user_id == user.user_id %}
                 <div class="col-md-5 bg-primary mb-3 align-self-end border rounded-pill">
                     <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
@@ -38,19 +38,18 @@
             const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
             const chatContainer = $("#chat-container");
 
-            socket.emit('send_message', {
-                            message: "{{ bot(None, True) }}",
-                            username: "{{ user.username }}",
-                            personality: "{{ user.personality }}",
-                            user_id: "{{ user.user_id }}",
-                            room_id: "{{ room.room_id }}"
-                            });
 
             socket.on('connect', () => {
                 socket.emit('join_room', {
                     username: "{{ user.username }}",
                     user_id: "{{ user.user_id }}",
                     room_name: "{{ room.name }}",
+                    room_id: "{{ room.room_id }}"
+                });
+                socket.emit('send_message', {
+                    username: "{{ user.username }}",
+                    personality: "{{ user.personality }}",
+                    user_id: "{{ user.user_id }}",
                     room_id: "{{ room.room_id }}"
                 });
 
@@ -67,14 +66,14 @@
                         <p class="p-0 fs-6 text-md-center m-2">${data.message}</p>
                     </div>`
 
-                if( data.user_id === "{{ user.user_id }}" ){
+                if (data.user_id === "{{ user.user_id }}") {
                     chatContainer.append(sentMessageElement);
-                }else {
+                } else {
                     chatContainer.append(receivedMessageElement);
                 }
             });
 
-            socket.on('user_joined',(data) => {
+            socket.on('user_joined', (data) => {
                 //const element = `<p class="mx-auto fs-6" style="color: black"> ----> ${data.username} joined the room <---- </p>`;
                 //chatContainer.append(element);
             });
@@ -88,7 +87,7 @@
                     const messageInput = $("#message-input");
                     if(messageInput.val().trim().length) {
                         socket.emit('send_message', {
-                            message: "{{ bot(None, True) }}",
+                            message: "",
                             username: "{{ user.username }}",
                             personality: "{{ user.personality }}",
                             user_id: "{{ user.user_id }}",
