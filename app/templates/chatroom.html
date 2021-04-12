@@ -76,7 +76,7 @@
                         <p class="p-0 fs-6 text-md-center m-2">${data.message}</p>
                     </div>`
 
-                if(data.user_id === "{{ user.user_id }}" ){
+                if( data.user_id === "{{ user.user_id }}" ){
                     chatContainer.append(sentMessageElement);
                 }else {
                     chatContainer.append(receivedMessageElement);
@@ -84,9 +84,8 @@
             });
 
             socket.on('user_joined',(data) => {
-                //console.log(data)
-                const element = `<p class="mx-auto fs-6" style="color: black"> ----> ${data.username} joined the room <---- </p>`;
-                chatContainer.append(element)
+                //const element = `<p class="mx-auto fs-6" style="color: black"> ----> ${data.username} joined the room <---- </p>`;
+                //chatContainer.append(element);
             });
 
 
