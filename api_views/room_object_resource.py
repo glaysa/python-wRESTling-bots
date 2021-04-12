@@ -1,4 +1,4 @@
-from flask import session, redirect, url_for, request
+from flask import session, redirect, url_for
 from flask_restful import Resource
 from api_views import room_list
 from dataclasses import asdict

@@ -1,7 +1,7 @@
 from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import room_list
-from data.json_serializer import asdict
+from dataclasses import asdict
 from data.models import Chatroom as Room
 
 

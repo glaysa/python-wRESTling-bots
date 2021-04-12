@@ -4,7 +4,6 @@ from flask import render_template, request, redirect, url_for, session, flash
 from app.login import get_user
 from app import app
 from api_views import room_list
-from app.bots import assign_bot
 
 
 @app.route("/register")

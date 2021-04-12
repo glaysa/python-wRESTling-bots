@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from typing import List
 from uuid import uuid4
 
 
@@ -50,7 +51,7 @@ class Chatroom:
     name: str
     creator: str
     room_id: str = field(default_factory=get_id)
-    users: list[User] = field(default=list)
-    messages: list[Message] = field(default_factory=list)
+    users: List[User] = field(default_factory=List)
+    messages: List[Message] = field(default_factory=List)
 
 

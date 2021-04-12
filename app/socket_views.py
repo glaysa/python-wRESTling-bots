@@ -3,7 +3,7 @@ from flask_socketio import join_room
 from app import socket, bots
 from api_views import room_list
 from data.models import Chatroom, User, Message, Content
-# from bots import assign_bot
+
 
 # TODO: those methods will handle the http requests in away: I will fix it later
 
