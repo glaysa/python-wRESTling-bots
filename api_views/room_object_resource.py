@@ -5,18 +5,22 @@ from dataclasses import asdict
 
 
 # Shows a list of users from a specific room
+from data.json_deserializer import dict2User
+
+
 class RoomUserList(Resource):
 
     def get(self, room_id: str):
         for room in room_list:
             if room.room_id == room_id:
-                return room.users
+                return [asdict(user) for user in room.users]
         return {"message": "Room not found"}, 404
 
     def post(self, room_id: str):
         for room in room_list:
             if room.room_id == room_id:
                 user = session['user']
+                user = dict2User(user)
                 room.users.append(user)
                 return redirect(url_for('get_home'))
         return {"message": "Room not found"}, 404
@@ -47,12 +51,12 @@ class RoomUserMessageList(Resource):
             return {"message": "Room not found"}, 404
 
         for user in current_room.users:
-            if user['user_id'] == user_id:
+            if user.user_id == user_id:
                 current_user = user
         if current_user is None:
             return {"message": "User not found"}, 404
 
         for msg in current_room.messages:
-            if msg.sender.user_id == current_user['user_id']:
+            if msg.sender.user_id == current_user.user_id:
                 message_list.append(msg)
         return [asdict(message) for message in message_list]
