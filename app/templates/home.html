@@ -14,7 +14,7 @@
                                        class="px-auto pt-1 m-2 d-inline fw-bolder btn btn-outline-success btn-sm"
                                        style="text-decoration: none;">Open
                                     </a>
-                                    {% if user == room.creator %}
+                                    {% if user.user_id == room.creator.user_id %}
                                         <form action="/api/room/{{ room.room_id }}" class="form d-inline" method="POST">
                                             <input type="submit" value="Delete"
                                                class="px-auto pt-1 m-2  fw-bolder btn btn-outline-danger btn-sm"

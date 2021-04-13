@@ -1,3 +1,5 @@
+from data.models import Message, Content
+
 
 def assign_bot(personality):
     if personality == 'sweet':
@@ -12,29 +14,37 @@ def assign_bot(personality):
     return user_bot
 
 
-def bot_1(actions, first: bool):
-    if first:
-        return "Wanna cook?"
+def bot_1(action=None):
+    if action:
+        message = f"{action} sounds fun!"
     else:
-        return f"{actions} sounds fun!"
+        message = "Wanna cook?"
+        action = "cook"
+    return Message(content=Content(message=message, action=action))
 
 
-def bot_2(actions, first: bool):
-    if first:
-        return "Wanna play?"
+def bot_2(action=None):
+    if action:
+        message = f"{action} sounds awesome!"
     else:
-        return f"{actions} sounds awesome!"
+        message = "Wanna play?"
+        action = "play"
+    return Message(content=Content(message=message, action=action))
 
 
-def bot_3(actions, first: bool):
-    if first:
-        return "Let's sleep."
+def bot_3(action=None):
+    if action:
+        message = f"{action} sounds boring."
     else:
-        return f"{actions} sounds boring."
+        message = "Let's sleep."
+        action = "sleep"
+    return Message(content=Content(message=message, action=action))
 
 
-def bot_4(actions, first: bool):
-    if first:
-        return "I want to watch a movie."
+def bot_4(action=None):
+    if action:
+        message = f"{action} sounds lame."
     else:
-        return f"{actions} sounds lame."
+        message = "I want to watch a movie."
+        action = "watch"
+    return Message(content=Content(message=message, action=action))

@@ -40,8 +40,8 @@ class Content:
 
 @dataclass()
 class Message:
-    sender: User
     content: Content
+    sender: User = field(default=None)
     msg_type: str = field(default="CHAT")
     msg_id: str = field(default_factory=get_id)
 
@@ -49,9 +49,9 @@ class Message:
 @dataclass()
 class Chatroom:
     name: str
-    creator: str
+    creator: User
     room_id: str = field(default_factory=get_id)
     users: List[User] = field(default_factory=List)
-    messages: List[Message] = field(default_factory=List)
+    messages: List[Message] = field(default_factory=list)
 
 

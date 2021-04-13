@@ -1,3 +1,5 @@
+from dataclasses import asdict
+
 from flask_socketio import join_room
 
 from app import socket, bots
@@ -14,19 +16,27 @@ def handle_join_room_event(data):
     socket.emit('user_joined', data)
 
 
+received_msgs = []
+
+
 @socket.on('send_message')
 def handle_send_message_event(data):
     bot = bots.assign_bot(data['personality'])
-    data['message'] = bot(None, True)
-    content = Content(message=data['message'])
     sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
-    message = Message(sender=sender, content=content)
-
     the_current_room = get_room(data['room_id'])
+    if 'message_obj' in data and len(received_msgs) > 0:
+        action = data['message_obj']['content']['action']
+        message = bot(action)
+        message.sender = sender
+        data['message_obj'] = asdict(message)
+    else:
+        message = bot(None)
+        message.sender = sender
+        dct_msg = asdict(message)
+        data['message_obj'] = dct_msg
+        received_msgs.append(dct_msg)
+
     the_current_room.messages.append(message)  # the post method
-
-
-
     socket.emit('receive_message', data, room=data['room_id'])
 
 

@@ -2,6 +2,8 @@ from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import room_list
 from dataclasses import asdict
+
+from data.json_deserializer import dict2User
 from data.models import Chatroom as Room
 
 
@@ -33,7 +35,8 @@ class RoomList(Resource):
     def post(self):
         if request.method == 'POST':
             room_name = request.form['room_name']
-            creator = session['user']
+            current_user = session['user']
+            creator = dict2User(current_user)
             room = Room(name=room_name, creator=creator, users=[creator])
             room_list.append(room)
             flash(message=f"User '{room.name}' has been successfully created!", category="success")

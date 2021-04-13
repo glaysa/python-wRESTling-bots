@@ -26,35 +26,35 @@ messages = {
         "sender": users[1],
         "content": {
             "message": "Let's play",
-            "actions": "play"
+            "action": "play"
         }
     },
     2: {
         "sender": users[2],
         "content": {
             "message": "Let's swim",
-            "actions": "swim"
+            "action": "swim"
         }
     },
     3: {
         "sender": users[3],
         "content": {
             "message": "Let's dance",
-            "actions": "dance"
+            "action": "dance"
         }
     },
     4: {
         "sender": users[4],
         "content": {
             "message": "Let's cook",
-            "actions": "cook"
+            "action": "cook"
         }
     },
     5: {
         "sender": users[5],
         "content": {
             "message": "Let's fight",
-            "actions": "fight"
+            "action": "fight"
         }
     }
 }
