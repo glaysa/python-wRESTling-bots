@@ -58,12 +58,12 @@
             socket.on('receive_message', (data) => {
                 const receivedMessageElement = `
                     <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
-                        <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message_obj.content.message}</p>
+                        <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message.content.message}</p>
                     </div>`
 
                 const sentMessageElement = `
                     <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
-                        <p class="p-0 fs-6 text-md-center m-2">${data.message_obj.content.message}</p>
+                        <p class="p-0 fs-6 text-md-center m-2">${data.message.content.message}</p>
                     </div>`
 
                 if (data.user_id === "{{ user.user_id }}") {
@@ -71,6 +71,7 @@
                 } else {
                     chatContainer.append(receivedMessageElement);
                 }
+
                 //socket.emit('send_message', data)
             });
 
