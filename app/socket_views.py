@@ -22,7 +22,9 @@ def handle_send_message_event(data):
     bot = bots.assign_bot(data['personality'])
     sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
     the_current_room = get_room(data['room_id'])
+    last_sender = None
     if len(the_current_room.messages) > 0:
+        last_sender = the_current_room.messages[len(the_current_room.messages) - 1].sender
         action = the_current_room.messages[0].content.action
         message = bot(action)
         message.sender = sender
@@ -33,8 +35,9 @@ def handle_send_message_event(data):
         dct_msg = asdict(message)
         data['message'] = dct_msg
 
-    the_current_room.messages.append(message)  # the post method
-    socket.emit('receive_message', data, room=data['room_id'])
+    if last_sender != sender or last_sender is None:
+        the_current_room.messages.append(message)  # the post method
+        socket.emit('receive_message', data, room=data['room_id'])
 
 
 # helper:
