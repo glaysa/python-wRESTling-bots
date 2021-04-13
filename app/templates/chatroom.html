@@ -71,8 +71,6 @@
                 } else {
                     chatContainer.append(receivedMessageElement);
                 }
-
-                //socket.emit('send_message', data)
             });
 
             socket.on('user_joined', (data) => {

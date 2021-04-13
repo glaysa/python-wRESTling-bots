@@ -17,18 +17,13 @@ def handle_join_room_event(data):
     socket.emit('user_joined', data)
 
 
-received_msgs = []
-
-
 @socket.on('send_message')
 def handle_send_message_event(data):
     bot = bots.assign_bot(data['personality'])
     sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
     the_current_room = get_room(data['room_id'])
-    # and len(session['received_msgs']) > 0
     if len(the_current_room.messages) > 0:
         action = the_current_room.messages[0].content.action
-        #print(action)
         message = bot(action)
         message.sender = sender
         data['message'] = asdict(message)
@@ -37,8 +32,6 @@ def handle_send_message_event(data):
         message.sender = sender
         dct_msg = asdict(message)
         data['message'] = dct_msg
-        received_msgs.append(dct_msg)
-        # session['received_msgs'].append(dct_msg)
 
     the_current_room.messages.append(message)  # the post method
     socket.emit('receive_message', data, room=data['room_id'])
