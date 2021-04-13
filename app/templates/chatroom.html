@@ -38,7 +38,6 @@
             const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
             const chatContainer = $("#chat-container");
 
-
             socket.on('connect', () => {
                 socket.emit('join_room', {
                     username: "{{ user.username }}",
@@ -52,7 +51,6 @@
                     user_id: "{{ user.user_id }}",
                     room_id: "{{ room.room_id }}"
                 });
-
             });
 
             socket.on('receive_message', (data) => {
@@ -73,12 +71,8 @@
                 }
             });
 
-            socket.on('user_joined', (data) => {
-
-            });
-
+            socket.on('user_joined', (data) => { });
         });
-
     </script>
 {% endblock %}
 

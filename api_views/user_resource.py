@@ -3,7 +3,7 @@ from flask_restful import Resource
 from api_views import user_list
 from dataclasses import asdict
 
-from app.bots import assign_bot
+from validation.input_validations import name_validation, select_validation
 from data.models import User
 
 
@@ -37,7 +37,15 @@ class UserList(Resource):
         if request.method == 'POST':
             username = request.form['username']
             personality = request.form['personality']
-            assign_bot(personality)
+            msg_name = name_validation(username)
+            msg_personality = select_validation(personality)
+            if msg_name or msg_personality:
+                if msg_name:
+                    flash(message=msg_name, category="danger")
+                if msg_personality:
+                    flash(message=msg_personality, category="danger")
+                return redirect(url_for('get_register'))
+
             user = User(username=username, personality=personality)
             user_list.append(user)
 

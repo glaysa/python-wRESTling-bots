@@ -8,6 +8,9 @@ from data.models import Chatroom as Room
 
 
 # Shows a single room
+from validation.input_validations import room_name_validation
+
+
 class SingleRoom(Resource):
 
     def get(self, room_id: str = None):
@@ -35,6 +38,10 @@ class RoomList(Resource):
     def post(self):
         if request.method == 'POST':
             room_name = request.form['room_name']
+            name_failed = room_name_validation(room_name)
+            if name_failed:
+                flash(message=name_failed, category="danger")
+                return redirect(url_for('get_home'))
             current_user = session['user']
             creator = dict2User(current_user)
             room = Room(name=room_name, creator=creator, users=[creator])
