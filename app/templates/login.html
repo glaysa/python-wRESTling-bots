@@ -13,7 +13,7 @@
                       style="background: #dbcaca">
                     <div class="col-md-10 mt-3 mb-1 mx-auto">
                         <label for="username" class="form-label fw-bolder">Enter a username:</label>
-                        <input name="username" id="username" type="text" class="form-control">
+                        <input name="username" id="username" type="text" class="form-control" placeholder="Alex">
                     </div>
                     <div class="col-md-10 mx-auto">
                         <input type="submit" value="Login"
@@ -27,11 +27,16 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 {% endif %}
-                <div class="col-md-10 mx-auto mt-3 align-items-center">
-                    <h5>Dont have a user. Create one here:
-                        <a href="register" class="px-auto pt-1 m-2  fw-bolder btn btn-outline-secondary btn-sm"
-                           style="text-decoration: none;">Register</a>
-                    </h5>
+                <div class="col-md-10 mx-auto mt-3 align-items-center fs-5">
+                    <p>
+                        The program contains four ready users to use:
+                        <li>Alex</li>
+                        <li>Anna</li>
+                        <li>Edward</li>
+                        <li>Helena</li>
+                        Or you can register new users here
+                        <a href="register" class="px-auto pt-1 m-2  fw-bolder btn btn-outline-secondary btn-sm" style="text-decoration: none;">Register</a>
+                    </p>
                 </div>
             </div>
         </div>
