@@ -4,6 +4,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from app.login import get_user
 from app import app
 from api_views import room_list
+from data.json_deserializer import dict2User
 
 
 @app.route("/register")
@@ -18,6 +19,7 @@ def get_register():
 @login_required
 def get_home():
     user = session['user']
+    user = dict2User(user)
     if 'user' not in session:
         user = request.args.get('user')
 
