@@ -27,4 +27,4 @@ api.add_resource(RoomUserList, "/api/room/<string:room_id>/users")
 api.add_resource(RoomMessageList, "/api/room/<string:room_id>/messages")
 api.add_resource(RoomUserMessageList, "/api/room/<string:room_id>/<string:user_id>/messages")
 
-from app import web_views, login, socket_views, bots
+from app import web_views, login, socket_views
