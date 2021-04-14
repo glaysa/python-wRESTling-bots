@@ -1,19 +1,12 @@
 # python-chatroom-rest-api
 
+# Running the program:
+## windows:
 
-## imported libreries:
+**PowerShell:** `.\exe.ps1`
+**CMD:** `start .\exe.bat`
 
-```bash
-$ pip install Flask
-$ pip install restful-flask
-$ pip install flask-login
-$ pip install flask-socketio
-$ pip install eventlet
-```
+## Linux:
+`$ ./exe.sh`
 
-### not sure if it is needed to include in the execution files: 
 
-```
-py -3 -m venv venv
-venv\Scripts\activate
-```
