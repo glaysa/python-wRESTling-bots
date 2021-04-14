@@ -64,10 +64,7 @@ def get_login():
             login_user(user)
             session['user'] = user
             return redirect(url_for('get_home'))
-            # flash() Not needed
-            #return render_template('home.html', user=user, rooms=room_list)
         flash(message="Wrong username, please try again or create a new user", category="warning")
-
     return render_template('login.html')
 
 

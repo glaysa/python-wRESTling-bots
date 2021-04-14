@@ -1,14 +1,10 @@
 from dataclasses import asdict
-
 from flask_socketio import join_room
 
 from app import socket
-from bot import bots
 from api_views import room_list
+from bot.assign_bot import assign_bot
 from data.models import Chatroom, User
-
-
-# TODO: those methods will handle the http requests in away: I will fix it later
 
 
 @socket.on('join_room')
@@ -19,7 +15,7 @@ def handle_join_room_event(data):
 
 @socket.on('send_message')
 def handle_send_message_event(data):
-    bot = bots.assign_bot(data['personality'])
+    bot = assign_bot(data['personality'])
     sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
     the_current_room = get_room(data['room_id'])
     last_sender = None
