@@ -1,11 +1,12 @@
+from typing import List
+
 from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
-from api_views import room_list
+from api_views import room_list, user_list
 from dataclasses import asdict
 
 from data.json_deserializer import dict2User
-from data.models import Chatroom as Room
-
+from data.models import Chatroom as Room, User
 
 # Shows a single room
 from validation.input_validations import room_name_validation
@@ -38,16 +39,22 @@ class RoomList(Resource):
     def post(self):
         if request.method == 'POST':
             room_name = request.form['room_name']
+            room_type = request.form['room_type']
+            bot_user = get_bot(room_type)
             name_failed = room_name_validation(room_name)
             if name_failed:
                 flash(message=name_failed, category="danger")
                 return redirect(url_for('get_home'))
             current_user = session['user']
             creator = dict2User(current_user)
-            room = Room(name=room_name, creator=creator, users=[creator])
+            room = Room(name=room_name, creator=creator, users=[creator, bot_user])
             room_list.append(room)
             flash(message=f"User '{room.name}' has been successfully created!", category="success")
             return redirect(url_for('get_home'))
 
         flash(message="Cannot create room, please try again!", category="warning")
         return render_template('home.html')
+
+
+def get_bot(room_type):
+    return [user for user in user_list if user.personality == room_type][0]
