@@ -1,13 +1,13 @@
-from bot.bots import bot_1, bot_2, bot_3, bot_4
+from bot.bots import sweet, energetic, annoying, grumpy
 
 
 def assign_bot(personality):
     if personality == 'sweet':
-        user_bot = bot_1
+        user_bot = sweet
     elif personality == 'energetic':
-        user_bot = bot_2
+        user_bot = energetic
     elif personality == 'annoying':
-        user_bot = bot_3
+        user_bot = annoying
     else:
-        user_bot = bot_4
+        user_bot = grumpy
     return user_bot

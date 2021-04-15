@@ -21,7 +21,10 @@ def handle_send_message_event(data):
         sender.personality = data['personality']
         sender.user_type = user_type
         bot = assign_bot(personality=sender.personality)
-        message = bot()
+        if 'msg' in data:
+            message = bot(data['msg'])
+        else:
+            message = bot()
     else:
         message = Message(sender=sender, content=Content(message=data['msg']))
         data['ok'] = "DIN TUR"
@@ -29,7 +32,6 @@ def handle_send_message_event(data):
     data['message'] = asdict(message)
     current_room = get_room(data['room_id'])
     current_room.messages.append(message)
-
     socket.emit('receive_message', data)
 
 
@@ -42,26 +44,3 @@ def get_room(room_id: str) -> Chatroom:
 
 
 
-"""
- bot = assign_bot(data['personality'])
-    sender = User(username=data['username'], personality=data['personality'], user_id=data['user_id'])
-    the_current_room = get_room(data['room_id'])
-    last_sender = None
-    if len(the_current_room.messages) > 0:
-        last_sender = the_current_room.messages[len(the_current_room.messages) - 1].sender
-        action = the_current_room.messages[0].content.action
-        message = bot(action)
-        message.sender = sender
-        data['message'] = asdict(message)
-    else:
-        message = bot(None)
-        message.sender = sender
-        dct_msg = asdict(message)
-        data['message'] = dct_msg
-
-    if last_sender != sender or last_sender is None:
-        the_current_room.messages.append(message)  # the post method
-        socket.emit('receive_message', data, room=data['room_id'])
-
-
-"""
