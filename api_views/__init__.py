@@ -2,11 +2,11 @@ from typing import List
 
 from data.models import User, Chatroom as Room
 
-# test users
-user1 = User(username="Alex", personality="grumpy")
-user2 = User(username="Helena", personality="annoying")
-user3 = User(username="Edward", personality="sweet")
-user4 = User(username="Anna", personality="energetic")
+# BOTS
+user1 = User(username="Alex", user_type="BOT", personality="grumpy")
+user2 = User(username="Helena", user_type="BOT", personality="annoying")
+user3 = User(username="Edward", user_type="BOT", personality="sweet")
+user4 = User(username="Anna", user_type="BOT", personality="energetic")
 
 room1 = Room(name="Grumpy Room", creator=user1, users=[user1])
 room2 = Room(name="Annoying Room", creator=user2, users=[user2])

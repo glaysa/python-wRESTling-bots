@@ -59,12 +59,13 @@ def get_login():
 
     if request.method == "POST":
         username = request.form.get('username')
+        password = request.form.get('password')
         user = get_user(username)
-        if user and user.check_username(username):
+        if user and user.check_password(password):
             login_user(user)
             session['user'] = user
             return redirect(url_for('get_home'))
-        flash(message="Wrong username, please try again or create a new user", category="warning")
+        flash(message="Wrong username or password, please try again or create a new user", category="warning")
     return render_template('login.html')
 
 

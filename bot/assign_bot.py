@@ -1,4 +1,4 @@
-from bots import *
+from bot.bots import bot_1, bot_2, bot_3, bot_4
 
 
 def assign_bot(personality):
@@ -10,5 +10,4 @@ def assign_bot(personality):
         user_bot = bot_3
     else:
         user_bot = bot_4
-
     return user_bot

@@ -36,17 +36,17 @@ class UserList(Resource):
     def post(self):
         if request.method == 'POST':
             username = request.form['username']
-            personality = request.form['personality']
+            password = request.form['password']
             msg_name = name_validation(username)
-            msg_personality = select_validation(personality)
-            if msg_name or msg_personality:
+            msg_password = None
+            if msg_name or msg_password:
                 if msg_name:
                     flash(message=msg_name, category="danger")
-                if msg_personality:
-                    flash(message=msg_personality, category="danger")
+                if msg_password:
+                    flash(message=msg_password, category="danger")
                 return redirect(url_for('get_register'))
 
-            user = User(username=username, personality=personality)
+            user = User(username=username, password=password)
             user_list.append(user)
 
             flash(message=f"User '{user.username}' has been successfully registered!", category="success")

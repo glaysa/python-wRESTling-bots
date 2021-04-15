@@ -10,11 +10,13 @@ def get_id() -> str:
 @dataclass()
 class User:
     username: str
-    personality: str
+    password: str = field(default=None)
+    user_type: str = field(default="HUMAN")
+    personality: str = field(default=None)
     user_id: str = field(default_factory=get_id)
 
-    def check_username(self, username):
-        return username == self.username
+    def check_password(self, password):
+        return password == self.password
 
     def get_id(self):
         return self.username
