@@ -43,7 +43,3 @@ def get_room(room_id: str) -> Chatroom:
     for room in room_list:
         if room.room_id == room_id:
             return room
-
-
-
-

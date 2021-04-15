@@ -43,6 +43,7 @@ def choose_grumpy_response(message: str) -> Message:
     else:
         return random.choice(grumpy_responses['negative'])
 
+
 sweet_responses = {
     'positive': [
         Message(sender=user3, content=Content(message="Cooking with you is so much fun!")),
