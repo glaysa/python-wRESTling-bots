@@ -25,7 +25,8 @@
     <div class="d-flex p-2 mt-2 justify-content-around align-items-center">
         <form id="chatting-form" class="form w-50">
             <div class="form-group">
-                <input id="message-input" type="text" name="message" placeholder="type here..." class="form-control input-group">
+                <input id="message-input" type="text" name="message" placeholder="type here..."
+                       class="form-control input-group">
                 <input type="submit" name="reply-btn" value="Send" class="btn btn-primary mt-3 input-group">
             </div>
         </form>
@@ -37,53 +38,61 @@
         $(document).ready(() => {
             const socket = io.connect(`${location.protocol}//${document.domain}:${location.port}`);
             const chatContainer = $("#chat-container");
+            const chattingForm = $("#chatting-form");
 
             socket.on('connect', () => {
                 socket.emit('join_room', {
                     username: "{{ user.username }}",
                     user_id: "{{ user.user_id }}",
+                    user_type: "{{ user.user_type }}",
                     room_name: "{{ room.name }}",
                     room_id: "{{ room.room_id }}"
                 });
-                socket.emit('send_message', {
-                    username: "{{ user.username }}",
-                    personality: "{{ user.personality }}",
-                    user_id: "{{ user.user_id }}",
-                    room_id: "{{ room.room_id }}"
-                });
-                chattingForm.on('submit',(event) => {
+
+                chattingForm.on('submit', (event) => {
                     event.preventDefault();
                     const messageInput = $("#message-input");
-                    if(messageInput.val().trim().length) {
+                    if (messageInput.val().trim().length) {
                         socket.emit('send_message', {
-                            message: messageInput.val(),
-                            sender: "{{ user.username }}",
-                            room_id: "{{ room.room_id }}"
+                            msg: messageInput.val(),
+                            user_id: "{{ user.user_id }}",
+                            username : "{{ user.username }}",
+                            user_type: "{{ user.user_type }}",
+                            room_id: "{{ room.room_id }}",
                         });
                         messageInput.val("").focus();
                     }
                 });
-            });
 
-            socket.on('receive_message', (data) => {
-                const receivedMessageElement = `
+                socket.emit('send_message', {
+                    username: "{{ room.creator.username }}",
+                    personality: "{{ room.creator.personality }}",
+                    user_type: "{{ room.creator.user_type }}",
+                    user_id: "{{ room.creator.user_id }}",
+                    room_id: "{{ room.room_id }}"
+                });
+        });
+
+        socket.on('receive_message', (data) => {
+            const receivedMessageElement = `
                     <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message.content.message}</p>
                     </div>`
 
-                const sentMessageElement = `
+            const sentMessageElement = `
                     <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.message.content.message}</p>
                     </div>`
 
-                if (data.user_id === "{{ user.user_id }}") {
-                    chatContainer.append(sentMessageElement);
-                } else {
-                    chatContainer.append(receivedMessageElement);
-                }
-            });
+            if (data.user_id === "{{ user.user_id }}") {
+                chatContainer.append(sentMessageElement);
+            } else {
+                chatContainer.append(receivedMessageElement);
+            }
+        });
 
-            socket.on('user_joined', (data) => { });
+        socket.on('user_joined', (data) => {
+        });
         });
     </script>
 {% endblock %}

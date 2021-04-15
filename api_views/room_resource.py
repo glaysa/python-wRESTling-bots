@@ -46,8 +46,8 @@ class RoomList(Resource):
                 flash(message=name_failed, category="danger")
                 return redirect(url_for('get_home'))
             current_user = session['user']
-            creator = dict2User(current_user)
-            room = Room(name=room_name, creator=creator, users=[creator, bot_user])
+            current_user = dict2User(current_user)
+            room = Room(name=room_name, creator=bot_user, users=[current_user, bot_user])
             room_list.append(room)
             flash(message=f"User '{room.name}' has been successfully created!", category="success")
             return redirect(url_for('get_home'))
