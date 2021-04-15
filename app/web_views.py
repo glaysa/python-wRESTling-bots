@@ -54,7 +54,7 @@ def get_room(room_id):
 @app.route("/login", methods=['GET', 'POST'])
 def get_login():
     if 'user' in session:
-        the_current_user = session['user']
+        the_current_user = dict2User(session['user'])
         return render_template('home.html', user=the_current_user, rooms=room_list)
 
     if request.method == "POST":

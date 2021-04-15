@@ -18,24 +18,37 @@ def handle_send_message_event(data):
     sender = User(username=data['username'], user_id=data['user_id'])
     user_type = data['user_type']
     current_room = get_room(data['room_id'])
+    last_sender = None
+    prev_msg = None
+    if len(current_room.messages) > 0:
+        index = len(current_room.messages) - 1
+        prev_msg = current_room.messages[index]
+        last_sender = prev_msg.sender
+
     if user_type == "BOT":
         sender.personality = data['personality']
         sender.user_type = user_type
         bot = assign_bot(personality=sender.personality)
-        if len(current_room.messages) > 0:
-            index = len(current_room.messages) - 1
-            prev_msg = current_room.messages[index].content.message
-        else:
-            prev_msg = None
-        message = bot(prev_msg)
-
+        prev_content = prev_msg.content.message if prev_msg else None
+        message = bot(prev_content)
     else:
         message = Message(sender=sender, content=Content(message=data['msg']))
         data['ok'] = "DIN TUR"
 
-    data['message'] = asdict(message)
-    current_room.messages.append(message)
-    socket.emit('receive_message', data)
+    if last_sender != sender or last_sender is None:
+        data['message'] = asdict(message)
+        current_room.messages.append(message)
+        socket.emit('receive_message', data)
+
+
+'''
+    if len(current_room.messages) > 0:
+        print("Hello")
+        msg = current_room.messages[len(current_room.messages)-1]
+        last_sender = msg.sender
+
+    if last_sender != sender or last_sender is None:
+'''
 
 
 # helper:

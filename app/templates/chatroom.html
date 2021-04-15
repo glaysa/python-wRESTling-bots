@@ -8,7 +8,7 @@
     </div>
 
     <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
-         style="height:500px; overflow-y: auto; color: whitesmoke; background-color: aliceblue; width: 40%;">
+         style="min-height:350px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue; width: 40%;">
         {% for msg in room.messages %}
             {% if msg.sender.user_id == user.user_id %}
                 <div class="col-md-5 bg-primary mb-3 align-self-end border rounded-pill">
@@ -40,6 +40,21 @@
             const chatContainer = $("#chat-container");
             const chattingForm = $("#chatting-form");
 
+            chattingForm.on('submit', (event) => {
+                event.preventDefault();
+                const messageInput = $("#message-input");
+                if (messageInput.val().trim().length) {
+                    socket.emit('send_message', {
+                        msg: messageInput.val(),
+                        user_id: "{{ user.user_id }}",
+                        username: "{{ user.username }}",
+                        user_type: "{{ user.user_type }}",
+                        room_id: "{{ room.room_id }}",
+                    });
+                    messageInput.val("").focus();
+                }
+            });
+
             socket.on('connect', () => {
                 socket.emit('join_room', {
                     username: "{{ user.username }}",
@@ -49,21 +64,6 @@
                     room_id: "{{ room.room_id }}"
                 });
 
-                chattingForm.on('submit', (event) => {
-                    event.preventDefault();
-                    const messageInput = $("#message-input");
-                    if (messageInput.val().trim().length) {
-                        socket.emit('send_message', {
-                            msg: messageInput.val(),
-                            user_id: "{{ user.user_id }}",
-                            username: "{{ user.username }}",
-                            user_type: "{{ user.user_type }}",
-                            room_id: "{{ room.room_id }}",
-                        });
-                        messageInput.val("").focus();
-                    }
-                });
-
                 socket.emit('send_message', {
                     username: "{{ room.users[0].username }}",
                     personality: "{{ room.users[0].personality }}",
@@ -71,6 +71,7 @@
                     user_id: "{{ room.users[0].user_type }}",
                     room_id: "{{ room.room_id }}"
                 });
+
             });
 
             socket.on('receive_message', (data) => {
