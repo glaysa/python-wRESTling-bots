@@ -24,6 +24,7 @@ def handle_send_message_event(data):
         message = bot()
     else:
         message = Message(sender=sender, content=Content(message=data['msg']))
+        data['ok'] = "DIN TUR"
 
     data['message'] = asdict(message)
     current_room = get_room(data['room_id'])

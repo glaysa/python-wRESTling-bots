@@ -56,7 +56,7 @@
                         socket.emit('send_message', {
                             msg: messageInput.val(),
                             user_id: "{{ user.user_id }}",
-                            username : "{{ user.username }}",
+                            username: "{{ user.username }}",
                             user_type: "{{ user.user_type }}",
                             room_id: "{{ room.room_id }}",
                         });
@@ -71,28 +71,39 @@
                     user_id: "{{ room.creator.user_id }}",
                     room_id: "{{ room.room_id }}"
                 });
-        });
+            });
 
-        socket.on('receive_message', (data) => {
-            const receivedMessageElement = `
+            socket.on('receive_message', (data) => {
+                const receivedMessageElement = `
                     <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message.content.message}</p>
                     </div>`
 
-            const sentMessageElement = `
+                const sentMessageElement = `
                     <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.message.content.message}</p>
                     </div>`
 
-            if (data.user_id === "{{ user.user_id }}") {
-                chatContainer.append(sentMessageElement);
-            } else {
-                chatContainer.append(receivedMessageElement);
-            }
-        });
+                if (data.user_id === "{{ user.user_id }}") {
+                    chatContainer.append(sentMessageElement);
+                } else {
+                    chatContainer.append(receivedMessageElement);
+                }
+                if (data.ok) {
+                    delete data.ok
+                    socket.emit('send_message', {
+                        username: "{{ room.creator.username }}",
+                        personality: "{{ room.creator.personality }}",
+                        user_type: "{{ room.creator.user_type }}",
+                        user_id: "{{ room.creator.user_id }}",
+                        room_id: "{{ room.room_id }}"
+                    });
+                }
 
-        socket.on('user_joined', (data) => {
-        });
+            });
+
+            socket.on('user_joined', (data) => {
+            });
         });
     </script>
 {% endblock %}
