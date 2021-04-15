@@ -4,7 +4,7 @@ from api_views import user1, user2, user3, user4
 import random
 
 
-def sweet(message=None):
+def sweet(message=None) -> Message:
     if message:
         return responses.choose_sweet_response(message)
     else:

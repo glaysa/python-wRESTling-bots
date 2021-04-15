@@ -17,21 +17,24 @@ def handle_join_room_event(data):
 def handle_send_message_event(data):
     sender = User(username=data['username'], user_id=data['user_id'])
     user_type = data['user_type']
-
+    current_room = get_room(data['room_id'])
     if user_type == "BOT":
         sender.personality = data['personality']
         sender.user_type = user_type
         bot = assign_bot(personality=sender.personality)
-        if 'msg' in data:
-            message = bot(data['msg'])
+        if len(current_room.messages) > 0:
+            prev_msg = current_room.messages[1].content.message
         else:
-            message = bot()
+            prev_msg = None
+        message = bot(prev_msg)
+        print("30 : ", type(message))
+
     else:
         message = Message(sender=sender, content=Content(message=data['msg']))
+        print("34 : ", type(message))
         data['ok'] = "DIN TUR"
 
     data['message'] = asdict(message)
-    current_room = get_room(data['room_id'])
     current_room.messages.append(message)
     socket.emit('receive_message', data)
 
