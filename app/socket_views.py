@@ -27,11 +27,9 @@ def handle_send_message_event(data):
         else:
             prev_msg = None
         message = bot(prev_msg)
-        print("30 : ", type(message))
 
     else:
         message = Message(sender=sender, content=Content(message=data['msg']))
-        print("34 : ", type(message))
         data['ok'] = "DIN TUR"
 
     data['message'] = asdict(message)
