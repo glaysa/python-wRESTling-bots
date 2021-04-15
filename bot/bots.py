@@ -1,38 +1,31 @@
 from bot import responses
 from data.models import Message, Content
 from api_views import user1, user2, user3, user4
-import random
 
 
 def sweet(message=None) -> Message:
     if message:
         return responses.choose_sweet_response(message)
     else:
-        return Message(sender=user3, content=Content(message="Do you want to cook or go out for a coffee?"))
+        return Message(sender=user3, content=Content(message="Do you want to cook together?"))
 
 
-def energetic(action=None):
-    if action:
-        message = f"{action} sounds awesome!"
+def energetic(message=None) -> Message:
+    if message:
+        return responses.choose_energetic_response(message)
     else:
-        message = "Wanna play?"
-        action = "play"
-    return Message(content=Content(message=message, action=action))
+        return Message(sender=user3, content=Content(message="Let's party guys! My treat!"))
 
 
-def annoying(action=None):
-    if action:
-        message = f"{action} sounds boring."
+def annoying(message=None) -> Message:
+    if message:
+        return responses.choose_annoying_response(message)
     else:
-        message = "Let's sleep."
-        action = "sleep"
-    return Message(content=Content(message=message, action=action))
+        return Message(sender=user3, content=Content(message="It's time to steal something. You guys in?"))
 
 
-def grumpy(action=None):
-    if action:
-        message = f"{action} sounds lame."
+def grumpy(message=None) -> Message:
+    if message:
+        return responses.choose_grumpy_response(message)
     else:
-        message = "I want to watch a movie."
-        action = "watch"
-    return Message(content=Content(message=message, action=action))
+        return Message(sender=user3, content=Content(message="Let's sleep at my house. You coming or what?"))

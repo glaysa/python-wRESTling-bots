@@ -23,7 +23,8 @@ def handle_send_message_event(data):
         sender.user_type = user_type
         bot = assign_bot(personality=sender.personality)
         if len(current_room.messages) > 0:
-            prev_msg = current_room.messages[1].content.message
+            index = len(current_room.messages) - 1
+            prev_msg = current_room.messages[index].content.message
         else:
             prev_msg = None
         message = bot(prev_msg)
