@@ -42,12 +42,13 @@ class RoomList(Resource):
             room_type = request.form['room_type']
             bot_user = get_bot(room_type)
             name_failed = room_name_validation(room_name)
+            # select validation
             if name_failed:
                 flash(message=name_failed, category="danger")
                 return redirect(url_for('get_home'))
             current_user = session['user']
             current_user = dict2User(current_user)
-            room = Room(name=room_name, creator=bot_user, users=[current_user, bot_user])
+            room = Room(name=room_name, creator=current_user, users=[bot_user, current_user])
             room_list.append(room)
             flash(message=f"User '{room.name}' has been successfully created!", category="success")
             return redirect(url_for('get_home'))

@@ -57,7 +57,7 @@
                             msg: messageInput.val(),
                             user_id: "{{ user.user_id }}",
                             username: "{{ user.username }}",
-                            user_type: "{{ user.user_type }}",
+                            user_type: "BOT",
                             room_id: "{{ room.room_id }}",
                         });
                         messageInput.val("").focus();
@@ -65,10 +65,10 @@
                 });
 
                 socket.emit('send_message', {
-                    username: "{{ room.creator.username }}",
-                    personality: "{{ room.creator.personality }}",
-                    user_type: "{{ room.creator.user_type }}",
-                    user_id: "{{ room.creator.user_id }}",
+                    username: "{{ room.users[0].username }}",
+                    personality: "{{ room.users[0].personality }}",
+                    user_type: "HUMAN",
+                    user_id: "{{ room.users[0].user_type }}",
                     room_id: "{{ room.room_id }}"
                 });
             });
@@ -92,11 +92,11 @@
                 if (data.ok) {
                     delete data.ok
                     socket.emit('send_message', {
-                        username: "{{ room.creator.username }}",
-                        personality: "{{ room.creator.personality }}",
-                        user_type: "{{ room.creator.user_type }}",
-                        user_id: "{{ room.creator.user_id }}",
-                        room_id: "{{ room.room_id }}"
+                        username: "{{ room.users[0].username }}",
+                        personality: "{{ room.users[0].personality }}",
+                        user_type: "HUMAN",
+                        user_id: "{{ room.users[0].id }}",
+                        room_id: "{{ room.room_id }}",
                     });
                 }
 

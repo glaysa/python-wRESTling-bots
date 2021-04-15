@@ -17,6 +17,7 @@ def handle_join_room_event(data):
 def handle_send_message_event(data):
     sender = User(username=data['username'], user_id=data['user_id'])
     user_type = data['user_type']
+
     if user_type == "BOT":
         sender.personality = data['personality']
         sender.user_type = user_type
