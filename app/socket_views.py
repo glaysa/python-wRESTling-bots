@@ -4,6 +4,7 @@ from flask_socketio import join_room
 from app import socket
 from api_views import room_list
 from bot.assign_bot import assign_bot
+from data.json_deserializer import dict2User
 from data.models import Chatroom, User, Message, Content
 
 
@@ -35,11 +36,10 @@ def handle_send_message_event(data):
         message = Message(sender=sender, content=Content(message=data['msg']))
         data['ok'] = "DIN TUR"
 
-    if last_sender != sender or last_sender is None:
+    if last_sender is None or last_sender.user_id != sender.user_id:
         data['message'] = asdict(message)
         current_room.messages.append(message)
         socket.emit('receive_message', data)
-
 
 '''
     if len(current_room.messages) > 0:
