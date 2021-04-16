@@ -5,7 +5,7 @@ from flask_restful import Resource
 from api_views import room_list, user_list
 from dataclasses import asdict
 
-from data.json_deserializer import dict2User
+from data.dict2obj import dict2User
 from data.models import Chatroom as Room, User
 
 # Shows a single room

@@ -10,12 +10,15 @@
     <div id="chat-container" class="p-2 d-flex flex-column justify-content-center border border-1 rounded mx-auto"
          style="min-height:350px; overflow-y: scroll; color: whitesmoke; background-color: aliceblue; width: 40%;">
         {% for msg in room.messages %}
+            {% if msg %}
+                {% set size = msg.content.message|length % 12 %}
+            {% endif %}
             {% if msg.sender.user_id == user.user_id %}
-                <div class="col-md-5 bg-primary mb-3 align-self-end border rounded-pill">
+                <div class="col-md-{{ size }} bg-primary mb-3 align-self-end border rounded-pill">
                     <p class="p-0 fs-6 text-md-center m-2">{{ msg.content.message }}</p>
                 </div>
             {% else %}
-                <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
+                <div class="col-md-{{ size }} bg-secondary mt-3 align-self-start border rounded-pill">
                     <p class="p-0 fs-6 text-md-center m-2">{{ msg.sender.username }}: {{ msg.content.message }}</p>
                 </div>
             {% endif %}
@@ -75,13 +78,14 @@
             });
 
             socket.on('receive_message', (data) => {
+                const msgLen = messageLength(data.message.content.message)
                 const receivedMessageElement = `
-                    <div class="col-md-5 bg-secondary mt-3 align-self-start border rounded-pill">
+                    <div class="col-md-${msgLen} bg-secondary mt-3 align-self-start border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.username}: ${data.message.content.message}</p>
                     </div>`
 
                 const sentMessageElement = `
-                    <div class="col-md-5 bg-primary mt-3 align-self-end border rounded-pill">
+                    <div class="col-md-${msgLen} bg-primary mt-3 align-self-end border rounded-pill">
                         <p class="p-0 fs-6 text-md-center m-2">${data.message.content.message}</p>
                     </div>`
 
@@ -105,6 +109,11 @@
 
             socket.on('user_joined', (data) => {
             });
+
+
+            function messageLength(message){
+                return message.length % 12
+            }
         });
     </script>
 {% endblock %}

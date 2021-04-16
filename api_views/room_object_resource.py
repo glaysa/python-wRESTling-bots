@@ -5,7 +5,7 @@ from dataclasses import asdict
 
 
 # Shows a list of users from a specific room
-from data.json_deserializer import dict2User
+from data.dict2obj import dict2User
 
 
 class RoomUserList(Resource):

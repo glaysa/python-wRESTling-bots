@@ -4,7 +4,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 from app.login import get_user
 from app import app
 from api_views import room_list
-from data.json_deserializer import dict2User
+from data.dict2obj import dict2User
 
 
 @app.route("/register")

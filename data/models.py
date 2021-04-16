@@ -37,7 +37,6 @@ class User:
 @dataclass()
 class Content:
     message: str
-    action: str = field(default=None)
 
 
 @dataclass()

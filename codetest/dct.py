@@ -1,5 +1,5 @@
 from data.models import Message, Content, User
-from data.json_deserializer import *
+from data.dict2obj import *
 from dataclasses import asdict
 
 sndr = User(username="Nima", personality="annoying")
