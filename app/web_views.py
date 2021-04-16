@@ -12,7 +12,7 @@ def get_register():
     if 'user' in session:
         return redirect(url_for("get_home"))
 
-    return render_template("register.html", msg="will send a message here from the /api/users (post)")
+    return render_template("register.html")
 
 
 @app.route("/home")
@@ -45,9 +45,6 @@ def get_room(room_id):
         if room.room_id == room_id:
             active_room = room
     return render_template(f"chatroom.html", room=active_room, user=active_user)
-
-
-# bot=assign_bot(active_user['personality'])
 
 
 @app.route("/", methods=['GET', 'POST'])

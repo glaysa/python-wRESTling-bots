@@ -3,7 +3,7 @@ from flask_restful import Resource
 from api_views import user_list
 from dataclasses import asdict
 
-from validation.input_validations import name_validation, select_validation
+from validation.input_validations import name_validation, password_validation
 from data.models import User
 
 
@@ -38,7 +38,7 @@ class UserList(Resource):
             username = request.form['username']
             password = request.form['password']
             msg_name = name_validation(username)
-            msg_password = None
+            msg_password = password_validation(password)
             if msg_name or msg_password:
                 if msg_name:
                     flash(message=msg_name, category="danger")

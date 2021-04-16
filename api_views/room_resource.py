@@ -9,7 +9,7 @@ from data.json_deserializer import dict2User
 from data.models import Chatroom as Room, User
 
 # Shows a single room
-from validation.input_validations import room_name_validation
+from validation.input_validations import room_name_validation, select_validation
 
 
 class SingleRoom(Resource):
@@ -40,12 +40,17 @@ class RoomList(Resource):
         if request.method == 'POST':
             room_name = request.form['room_name']
             room_type = request.form['room_type']
-            bot_user = get_bot(room_type)
             name_failed = room_name_validation(room_name)
-            # select validation
-            if name_failed:
-                flash(message=name_failed, category="danger")
+            room_type_failed = select_validation(room_type)
+            if name_failed or room_type_failed:
+                print(name_failed)
+                print(room_type_failed)
+                if name_failed:
+                    flash(message=name_failed, category="danger")
+                if room_type_failed:
+                    flash(message=room_type_failed, category="danger")
                 return redirect(url_for('get_home'))
+            bot_user = get_bot(room_type)
             current_user = session['user']
             current_user = dict2User(current_user)
             room = Room(name=room_name, creator=current_user, users=[bot_user, current_user])

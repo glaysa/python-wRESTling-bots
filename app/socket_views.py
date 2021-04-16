@@ -41,15 +41,6 @@ def handle_send_message_event(data):
         current_room.messages.append(message)
         socket.emit('receive_message', data)
 
-'''
-    if len(current_room.messages) > 0:
-        print("Hello")
-        msg = current_room.messages[len(current_room.messages)-1]
-        last_sender = msg.sender
-
-    if last_sender != sender or last_sender is None:
-'''
-
 
 # helper:
 def get_room(room_id: str) -> Chatroom:

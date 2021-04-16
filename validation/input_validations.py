@@ -17,8 +17,15 @@ def name_validation(name: str):
                f"with a capital one and followed with small ones."
 
 
-def select_validation(selected: str):
-    if selected:
-        return None
+def password_validation(password: str):
+    if len(password) < 3:
+        return f"The password must be at least 4 characters!"
     else:
-        return f"Please select a personality for your bot!"
+        return None
+
+
+def select_validation(selected: str):
+    if len(selected) == 0:
+        return "You should choose a room_type for creating a room"
+    else:
+        return None
