@@ -6,6 +6,9 @@
     <div class="container-md h-75 w-50 mt-5">
         <div class="row align-items-center h-100">
             <div class="row">
+                 <div class="col-md-8 mx-auto mt-3 align-items-center">
+                    <h2>Register</h2>
+                </div>
                 <form action="/api/users" method="POST" class="form-group col-md-8 mx-auto border rounded"
                       style="background: #dbcaca">
                     <div class="col-md-10 mt-3 mb-1 mx-auto">
@@ -14,7 +17,7 @@
                     </div>
                     <div class="col-md-10 mt-3 mb-1 mx-auto">
                         <label for="password" class="form-label fw-bolder">Password:</label>
-                        <input name="password" type="password" class="form-control">
+                        <input name="password" id="password" type="password" class="form-control">
                     </div>
                     <div class="col-md-10 mx-auto">
                         <input id="register" type="submit" value="Register"
@@ -22,10 +25,9 @@
                     </div>
                 </form>
                 <div class="col-md-8 mx-auto mt-3 align-items-center">
-                    <h5>Else
+                    <h5>Already have an account? Login here!
                         <a href="login" class="px-auto pt-1 m-2 w-25 fw-bolder btn btn-outline-secondary btn-s"
-                           style="text-decoration: none;">login</a>if
-                        you already have a user
+                           style="text-decoration: none;">login</a>
                     </h5>
                 </div>
             </div>
