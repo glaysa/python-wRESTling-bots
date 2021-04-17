@@ -4,7 +4,6 @@ from flask_socketio import join_room
 from app import socket
 from api_views import room_list
 from bot.assign_bot import assign_bot
-from data.dict2obj import dict2User
 from data.models import Chatroom, User, Message, Content
 
 

@@ -1,4 +1,4 @@
-from flask import request, redirect, url_for, render_template, session, flash
+from flask import request, redirect, url_for, session, flash
 from flask_restful import Resource
 from api_views import user_list
 from dataclasses import asdict

@@ -1,12 +1,10 @@
-from typing import List
-
 from flask import request, redirect, url_for, render_template, session, flash
 from flask_restful import Resource
 from api_views import room_list, user_list
 from dataclasses import asdict
 
 from data.dict2obj import dict2User
-from data.models import Chatroom as Room, User
+from data.models import Chatroom as Room
 
 # Shows a single room
 from validation.input_validations import room_name_validation, select_validation
@@ -43,8 +41,6 @@ class RoomList(Resource):
             name_failed = room_name_validation(room_name)
             room_type_failed = select_validation(room_type)
             if name_failed or room_type_failed:
-                print(name_failed)
-                print(room_type_failed)
                 if name_failed:
                     flash(message=name_failed, category="danger")
                 if room_type_failed:
@@ -55,7 +51,7 @@ class RoomList(Resource):
             current_user = dict2User(current_user)
             room = Room(name=room_name, creator=current_user, users=[bot_user, current_user])
             room_list.append(room)
-            flash(message=f"User '{room.name}' has been successfully created!", category="success")
+            flash(message=f"Room '{room.name}' has been successfully created!", category="success")
             return redirect(url_for('get_home'))
 
         flash(message="Cannot create room, please try again!", category="warning")
