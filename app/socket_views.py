@@ -39,7 +39,7 @@ def handle_send_message_event(data):
     if last_sender is None or last_sender.user_id != sender.user_id:
         data['message'] = asdict(message)
         current_room.messages.append(message)
-        socket.emit('receive_message', data)
+        socket.emit('receive_message', data, to=current_room.room_id)
 
 
 # helper:
