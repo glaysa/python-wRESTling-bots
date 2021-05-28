@@ -13,10 +13,10 @@ The project is rest-full api and socketio implementaion. it has the following fu
   **PowerShell:** `.\exe.ps1`<br>
   **CMD:** 
   ```
-  >>> py -m venv appvenv
-  >>> appvenv\Scripts\activate.bat
-  >>> pip install -r requirements.txt
-  >>> flask run
+  > py -m venv appvenv
+  > appvenv\Scripts\activate.bat
+  > pip install -r requirements.txt
+  > flask run
   ```
 
 ## On Linux:
